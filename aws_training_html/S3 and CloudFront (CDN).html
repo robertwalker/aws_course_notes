@@ -1,0 +1,169 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- common.css -->
+      <style>* {-webkit-tap-highlight-color: rgba(0,0,0,0);}html {-webkit-text-size-adjust: none;}body {font-family: -apple-system, Helvetica, Arial, sans-serif;margin: 0;padding: 20px;color: #333;word-wrap: break-word;}h1, h2, h3, h4, h5, h6 {line-height: 1.1;}img {max-width: 100% !important;height: auto;}blockquote {margin: 0;padding: 0 15px;color: #777;border-left: 4px solid #ddd;}hr {background-color: #ddd;border: 0;height: 1px;margin: 15px 0;}code {font-family: Menlo, Consolas, 'Ubuntu Mono', Monaco, 'source-code-pro', monospace;line-height: 1.4;margin: 0;padding: 0.2em 0;font-size: 90%;background-color: rgba(0,0,0,0.04);border-radius: 3px;}pre > code {margin: 0;padding: 0;font-size: 100%;word-break: normal;background: transparent;border: 0;}ol {list-style-type: decimal;}ol ol, ul ol {list-style-type: lower-latin;}ol ol ol, ul ol ol, ul ul ol, ol ul ol {list-style-type: lower-roman;}table {border-spacing: 0;border-collapse: collapse;margin-top: 0;margin-bottom: 16px;}table th {font-weight: bold;}table th, table td {padding: 6px 13px;border: 1px solid #ddd;}table tr {border-top: 1px solid #ccc;}table tr:nth-child(even) {background-color: #f8f8f8;}input[type="checkbox"] {cursor: default;margin-right: 0.5em;font-size: 13px;}.task-list-item {list-style-type: none;}.task-list-item+.task-list-item {margin-top: 3px;}.task-list-item input {float: left;margin: 0.3em 1em 0.25em -1.6em;vertical-align: middle;}#tag-field {margin: 8px 2px 10px;}#tag-field .tag {display: inline-block;background: #cadff3;border-radius: 4px;padding: 1px 8px;color: black;font-size: 12px;margin-right: 10px;line-height: 1.4;}</style>
+      <!-- ace-static.css -->
+      <style>.ace_static_highlight {white-space: pre-wrap;}.ace_static_highlight .ace_gutter {width: 2em;text-align: right;padding: 0 3px 0 0;margin-right: 3px;}.ace_static_highlight.ace_show_gutter > .ace_line {padding-left: 2.6em;}.ace_static_highlight .ace_line {position: relative;}.ace_static_highlight .ace_gutter-cell {-moz-user-select: -moz-none;-khtml-user-select: none;-webkit-user-select: none;user-select: none;top: 0;bottom: 0;left: 0;position: absolute;}.ace_static_highlight .ace_gutter-cell:before {content: counter(ace_line, decimal);counter-increment: ace_line;}.ace_static_highlight {counter-reset: ace_line;}</style>
+      <style>.ace-chrome .ace_gutter {background: #ebebeb;color: #333;overflow : hidden;}.ace-chrome .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-chrome {background-color: #FFFFFF;color: black;}.ace-chrome .ace_cursor {color: black;}.ace-chrome .ace_invisible {color: rgb(191, 191, 191);}.ace-chrome .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-chrome .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-chrome .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-chrome .ace_invalid {background-color: rgb(153, 0, 0);color: white;}.ace-chrome .ace_fold {}.ace-chrome .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-chrome .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-chrome .ace_support.ace_type,.ace-chrome .ace_support.ace_class.ace-chrome .ace_support.ace_other {color: rgb(109, 121, 222);}.ace-chrome .ace_variable.ace_parameter {font-style:italic;color:#FD971F;}.ace-chrome .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-chrome .ace_comment {color: #236e24;}.ace-chrome .ace_comment.ace_doc {color: #236e24;}.ace-chrome .ace_comment.ace_doc.ace_tag {color: #236e24;}.ace-chrome .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-chrome .ace_variable {color: rgb(49, 132, 149);}.ace-chrome .ace_xml-pe {color: rgb(104, 104, 91);}.ace-chrome .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-chrome .ace_heading {color: rgb(12, 7, 255);}.ace-chrome .ace_list {color:rgb(185, 6, 144);}.ace-chrome .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-chrome .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-chrome .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-chrome .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-chrome .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-chrome .ace_gutter-active-line {background-color : #dcdcdc;}.ace-chrome .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-chrome .ace_storage,.ace-chrome .ace_keyword,.ace-chrome .ace_meta.ace_tag {color: rgb(147, 15, 128);}.ace-chrome .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-chrome .ace_string {color: #1A1AA6;}.ace-chrome .ace_entity.ace_other.ace_attribute-name {color: #994409;}.ace-chrome .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}</style>
+      <!-- export.css -->
+      <style>
+        body{margin:0 auto;max-width:800px;line-height:1.4}
+        #nav{margin:5px 0 10px;font-size:15px}
+        #titlearea{border-bottom:1px solid #ccc;font-size:17px;padding:10px 0;}
+        #contentarea{font-size:15px;margin:16px 0}
+        .cell{outline:0;min-height:20px;margin:5px 0;padding:5px 0;}
+        .code-cell{font-family:Menlo,Consolas,'Ubuntu Mono',Monaco,'source-code-pro',monospace;font-size:12px;}
+        .latex-cell{white-space:pre-wrap;}
+      </style>
+      <!-- User CSS -->
+      <style> .text-cell {font-size: 15px;}.code-cell {font-size: 12px;}.markdown-cell {font-size: 15px;}.latex-cell {font-size: 15px;}</style>
+    </head>
+    <body>
+      <div id="nav"><div>Next: <a href='Elastic Compute Cloud (EC2).html'>Elastic Compute Cloud (EC2)</a>, Previous: <a href='Identity Access Management (IAM).html'>Identity Access Management (IAM)</a>, Up: <a href='index.html'>Index</a></div></div>
+      <div id="titlearea">
+        <h2>S3 and CloudFront (CDN)</h2>
+      </div>
+      <div id="contentarea"><div class="cell markdown-cell"><h2>Simple Storage Service (S3)</h2>
+<p>S3 is Object Based Storage. Spread across multiple devices and facilities.</p>
+<ul>
+<li>Object Based Storage</li>
+<li>File from 0 to 5 TB</li>
+<li>Unlimited storage</li>
+<li>Buckets store files</li>
+<li>S3 names must be globally unique</li>
+<li>URL to Bucket -- <a href="https://s3-us-east-1.amazonaws.com/bucket_name">https://s3-us-east-1.amazonaws.com/bucket_name</a></li>
+<li>Upload successful return HTTP OK (200)</li>
+</ul>
+<h3>Data Consistency</h3>
+<ul>
+<li>Read after Write consistencey for PUTS of new Objects</li>
+<li>Eventual Consistency for overwrite PUTS and DELETES</li>
+</ul>
+<h3>Key Value Store</h3>
+<ul>
+<li>Key (Name of the object)</li>
+<li>Value (The data stored as a sequence of bytes)</li>
+<li>Version ID</li>
+<li>Metadata</li>
+<li>Subresources
+<ul>
+<li>Access Control Lists</li>
+<li>Torrent</li>
+</ul>
+</li>
+</ul>
+<h3>The Basics</h3>
+<ul>
+<li>Build for 99.99% availability</li>
+<li>Amazon guanantees 99.9% availability</li>
+<li>Eleven 9's durability (99.999999999%)</li>
+<li>Tiered storage available</li>
+<li>Lifecycle Management</li>
+<li>Versioning</li>
+<li>Encryption</li>
+<li>Secured via ACLs and Bucket Policies</li>
+</ul>
+<h3>Storeage Tiers/Classes</h3>
+<ul>
+<li>S3 -- 99.99% availability, 99.999999999% durability</li>
+<li>S3-IA (Infrequently Accessed)</li>
+<li>Reduced Redundancy Storage (RRS) -- 99.99% durability and 99.99% availability</li>
+<li>Glacier -- Very cheap archival service with 3-5 hour access times</li>
+</ul>
+<h3>Charges</h3>
+<ul>
+<li>Storage</li>
+<li>Requests</li>
+<li>Storage Management Pricing</li>
+<li>Data Transfer Pricing -- Uploading data is free. Moving data has a charge</li>
+</ul>
+<h3>Transfer Acceleration</h3>
+<p>Fast, easy and secure transfer of files over long distances between end users and S3 bucket. Takes advantage of CloudFront's globallly distributed edge locations over optimized network path.</p>
+<p><strong>Important:</strong> Read the S3 FAQ before taking the exam. It comes up A LOT!</p>
+<h3>Buckets</h3>
+<ul>
+<li>Buckets are configured in the Global region</li>
+<li>Minimum size for object is 0 bytes</li>
+<li>Control access via ACL or Bucket Policies</li>
+<li>Buckets and objects are private by default</li>
+</ul>
+<h3>Versioning</h3>
+<ul>
+<li>Once versioning is enabled it cannot be disabled</li>
+<li>Versioning can be suspended but not disabled</li>
+</ul>
+<h3>Encryption</h3>
+<ul>
+<li>In transit with SSL/TLS.</li>
+<li>At Rest -- Server Side Encryption:
+<ul>
+<li>S3 Managed Keys -- SSE-S3</li>
+<li>AWS Key Management Service, Managed Keys -- SSE-KMS</li>
+<li>Server Side Encryption with Customer Provided Keys -- SSE-C</li>
+</ul>
+</li>
+<li>Client Side Encryption</li>
+</ul>
+<h3>Cross-region Replication</h3>
+<ul>
+<li>Bucket versioning is required</li>
+<li>Needs a role (can be created on demand)</li>
+<li>Applies only to new objects</li>
+<li>Existing object would need to be manually transferred to replica</li>
+<li>Use <code>aws</code> command line to copy (<code>aws cp --recursive</code>) existing objects to replica</li>
+<li>Delete markers are replicated</li>
+<li>Removing a delete marker or individual version is NOT replicated</li>
+<li>Cannot replicate to multiple buckets or use daisy chaining</li>
+</ul>
+<h3>Lifecycle Managment</h3>
+<ul>
+<li>Can be used in conjunction with versioning</li>
+<li>Can be applied to current and previous versions</li>
+<li>Trasition to the Standard - Infrequent Access Storage Class (30 days min)</li>
+<li>Archive to Glacier Storage Class (60 days min)</li>
+<li>Permanently Delete (Including Glacier) (180 days min)</li>
+</ul>
+<hr>
+<h2>CloudFront (CDN)</h2>
+<p>CloudFront is Amazon's Content Delivery Network (CDN).</p>
+<h3>Key Terminology</h3>
+<ul>
+<li>Edge Location -- This is the location where content will be cached</li>
+<li>Origin -- Location of original files (S3 Bucket, EC2 Instance, Elastic Load Balancer or Route53)</li>
+<li>Distribution -- This is the given name of te CDN consisting of Edge Locations</li>
+</ul>
+<h2>Storage Gateway</h2>
+<p>Your Data Center (Virtual appliance hipervisor) ---&gt; AWS (S3/Glacier)</p>
+<ul>
+<li>File Gateway (NFS)</li>
+<li>Volume Gateway (iSCSI)
+<ul>
+<li>Stored Volumns</li>
+<li>Cached Volumns</li>
+</ul>
+</li>
+<li>Tape Gateway (VTL)</li>
+</ul>
+<h2>Snowball</h2>
+<p>Previously called Import/Export.</p>
+<ul>
+<li>Snowball -- Physical disk appliance sent to you by Amazon</li>
+<li>Snowball Edge -- 100TB of data with compute capabilities (Lambda functions)</li>
+<li>Smowmobile -- 100PB Semi-trailer truck</li>
+</ul>
+<h2>S3 Transfer Acceleration</h2>
+<p>Use Edge Locations and CloudFront to accelerate file uploads.</p>
+<h2>Static Website Hosting</h2>
+<p>Endpoint URL follows pattern <code>http://bucket_name.s3-website-us-east-1.amazonaws.com</code></p>
+</div></div>
+      <script>document.body.onkeyup = function(e) {
+if (e.keyCode === 39) window.location.href = 'Elastic Compute Cloud (EC2).html';
+if (e.keyCode === 37) window.location.href = 'Identity Access Management (IAM).html';
+}</script>
+    </body>
+    </html>
+  

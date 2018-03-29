@@ -1,0 +1,273 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- common.css -->
+      <style>* {-webkit-tap-highlight-color: rgba(0,0,0,0);}html {-webkit-text-size-adjust: none;}body {font-family: -apple-system, Helvetica, Arial, sans-serif;margin: 0;padding: 20px;color: #333;word-wrap: break-word;}h1, h2, h3, h4, h5, h6 {line-height: 1.1;}img {max-width: 100% !important;height: auto;}blockquote {margin: 0;padding: 0 15px;color: #777;border-left: 4px solid #ddd;}hr {background-color: #ddd;border: 0;height: 1px;margin: 15px 0;}code {font-family: Menlo, Consolas, 'Ubuntu Mono', Monaco, 'source-code-pro', monospace;line-height: 1.4;margin: 0;padding: 0.2em 0;font-size: 90%;background-color: rgba(0,0,0,0.04);border-radius: 3px;}pre > code {margin: 0;padding: 0;font-size: 100%;word-break: normal;background: transparent;border: 0;}ol {list-style-type: decimal;}ol ol, ul ol {list-style-type: lower-latin;}ol ol ol, ul ol ol, ul ul ol, ol ul ol {list-style-type: lower-roman;}table {border-spacing: 0;border-collapse: collapse;margin-top: 0;margin-bottom: 16px;}table th {font-weight: bold;}table th, table td {padding: 6px 13px;border: 1px solid #ddd;}table tr {border-top: 1px solid #ccc;}table tr:nth-child(even) {background-color: #f8f8f8;}input[type="checkbox"] {cursor: default;margin-right: 0.5em;font-size: 13px;}.task-list-item {list-style-type: none;}.task-list-item+.task-list-item {margin-top: 3px;}.task-list-item input {float: left;margin: 0.3em 1em 0.25em -1.6em;vertical-align: middle;}#tag-field {margin: 8px 2px 10px;}#tag-field .tag {display: inline-block;background: #cadff3;border-radius: 4px;padding: 1px 8px;color: black;font-size: 12px;margin-right: 10px;line-height: 1.4;}</style>
+      <!-- ace-static.css -->
+      <style>.ace_static_highlight {white-space: pre-wrap;}.ace_static_highlight .ace_gutter {width: 2em;text-align: right;padding: 0 3px 0 0;margin-right: 3px;}.ace_static_highlight.ace_show_gutter > .ace_line {padding-left: 2.6em;}.ace_static_highlight .ace_line {position: relative;}.ace_static_highlight .ace_gutter-cell {-moz-user-select: -moz-none;-khtml-user-select: none;-webkit-user-select: none;user-select: none;top: 0;bottom: 0;left: 0;position: absolute;}.ace_static_highlight .ace_gutter-cell:before {content: counter(ace_line, decimal);counter-increment: ace_line;}.ace_static_highlight {counter-reset: ace_line;}</style>
+      <style>.ace-chrome .ace_gutter {background: #ebebeb;color: #333;overflow : hidden;}.ace-chrome .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-chrome {background-color: #FFFFFF;color: black;}.ace-chrome .ace_cursor {color: black;}.ace-chrome .ace_invisible {color: rgb(191, 191, 191);}.ace-chrome .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-chrome .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-chrome .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-chrome .ace_invalid {background-color: rgb(153, 0, 0);color: white;}.ace-chrome .ace_fold {}.ace-chrome .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-chrome .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-chrome .ace_support.ace_type,.ace-chrome .ace_support.ace_class.ace-chrome .ace_support.ace_other {color: rgb(109, 121, 222);}.ace-chrome .ace_variable.ace_parameter {font-style:italic;color:#FD971F;}.ace-chrome .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-chrome .ace_comment {color: #236e24;}.ace-chrome .ace_comment.ace_doc {color: #236e24;}.ace-chrome .ace_comment.ace_doc.ace_tag {color: #236e24;}.ace-chrome .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-chrome .ace_variable {color: rgb(49, 132, 149);}.ace-chrome .ace_xml-pe {color: rgb(104, 104, 91);}.ace-chrome .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-chrome .ace_heading {color: rgb(12, 7, 255);}.ace-chrome .ace_list {color:rgb(185, 6, 144);}.ace-chrome .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-chrome .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-chrome .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-chrome .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-chrome .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-chrome .ace_gutter-active-line {background-color : #dcdcdc;}.ace-chrome .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-chrome .ace_storage,.ace-chrome .ace_keyword,.ace-chrome .ace_meta.ace_tag {color: rgb(147, 15, 128);}.ace-chrome .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-chrome .ace_string {color: #1A1AA6;}.ace-chrome .ace_entity.ace_other.ace_attribute-name {color: #994409;}.ace-chrome .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}</style>
+      <!-- export.css -->
+      <style>
+        body{margin:0 auto;max-width:800px;line-height:1.4}
+        #nav{margin:5px 0 10px;font-size:15px}
+        #titlearea{border-bottom:1px solid #ccc;font-size:17px;padding:10px 0;}
+        #contentarea{font-size:15px;margin:16px 0}
+        .cell{outline:0;min-height:20px;margin:5px 0;padding:5px 0;}
+        .code-cell{font-family:Menlo,Consolas,'Ubuntu Mono',Monaco,'source-code-pro',monospace;font-size:12px;}
+        .latex-cell{white-space:pre-wrap;}
+      </style>
+      <!-- User CSS -->
+      <style> .text-cell {font-size: 15px;}.code-cell {font-size: 12px;}.markdown-cell {font-size: 15px;}.latex-cell {font-size: 15px;}</style>
+    </head>
+    <body>
+      <div id="nav"><div>Next: <a href='Virtual Private Cloud (VPC).html'>Virtual Private Cloud (VPC)</a>, Previous: <a href='DNS 101   Route53.html'>DNS 101 / Route53</a>, Up: <a href='index.html'>Index</a></div></div>
+      <div id="titlearea">
+        <h2>Databases</h2>
+      </div>
+      <div id="contentarea"><div class="cell markdown-cell"><h2>Relation Database Managment Systems (RDBMS)</h2>
+<h3>DB Vendors Supported by AWS</h3>
+<ul>
+<li>MS SQL Server</li>
+<li>Oracle</li>
+<li>MySQL</li>
+<li>PostgreSQL</li>
+<li>Amazon Aurora</li>
+<li>MariaDB</li>
+</ul>
+<p>Exam will cover RDBMS in general and may have some Aurora specific questions</p>
+<h3>Non Relational Databases (No-SQL)</h3>
+<ul>
+<li>Database
+<ul>
+<li>Collection = Table</li>
+<li>Document = Row</li>
+<li>Key Value Pairs = Fields</li>
+</ul>
+</li>
+</ul>
+<p>Amazon's No-SQL database is DynamoDB. Uses JSON structure for data.</p>
+<h2>Data Warehousing</h2>
+<p>Used for business intelligence and working with very large and complex data sets.</p>
+<h3>Tools Examples</h3>
+<ul>
+<li>Cognos</li>
+<li>Jaspersoft</li>
+<li>SQL Server Reporting Services</li>
+<li>Oracle Hyperion</li>
+<li>SAP NetWeaver</li>
+</ul>
+<h3>OLTP vs OLAP</h3>
+<ul>
+<li>Online Transaction Processing (OLTP)</li>
+<li>Online Analytics Processing (OLAP)</li>
+</ul>
+<p>OLTP and OLAP differ in terms of the types of queries you run.</p>
+<h3>OLTP Example</h3>
+<p>Order Number: 2120121</p>
+<p>Fetches a row of data such as Name, Date, Delivery Address, Delivery Status, etc.</p>
+<h3>OLAP Example</h3>
+<p>Net profit for EMEA and Pacific for the Digital Radio Product.</p>
+<p>Fetches large numbers of records to support queries such as:</p>
+<ul>
+<li>Sum of radios sold in EMEA</li>
+<li>Sum of radios sold in Pacific</li>
+<li>Unit cost of radio in each region</li>
+<li>Sales proice of each radio</li>
+<li>Sales price -- unit cost</li>
+</ul>
+<p>Used for data warehousing. Usually stored in a separate database from the one used for production applications. OLAP systems are designed to support very complex data queries as referenced above.</p>
+<p>Data Warehousing databases use a different type of architecture both from a database perspective and infrastructure layer.</p>
+<h2>Elasticache</h2>
+<p>Web service used to improve performance by storing very frequently accessed data in-memory (RAM) key value store.</p>
+<h3>Caching Options</h3>
+<ul>
+<li>Memcached</li>
+<li>Redis</li>
+</ul>
+<h2>Summary</h2>
+<ul>
+<li>RDS - OLTP
+<ul>
+<li>MS SQL</li>
+<li>MySQL</li>
+<li>PostgreSQL</li>
+<li>Oracle</li>
+<li>Aurora</li>
+<li>MariaDB</li>
+</ul>
+</li>
+<li>DynamoDB - No-SQL</li>
+<li>RedShift - OLAP</li>
+<li>Elasticache - In-memory high performance key/value cache storage</li>
+</ul>
+<h2>Automated Backups</h2>
+<h3>Automated Backups</h3>
+<p>Automated backup are stored in S3. Provide free storage equal to the size of your database.</p>
+<p>Automated backups are deleted when RDS instance is deleted.</p>
+<h3>Database Snapshots</h3>
+<p>User intitiated manual database backups. Not deleted when RDS instance is deleted.</p>
+<p>Instance I/O is suspended for the duration of the snapshot defined window for backup.</p>
+<h3>Restoring Backups</h3>
+<p>Restored backups from either automated or manual snapshots are restored to a new RDS instnce with a new DNS endpoint.</p>
+<h3>Encryption</h3>
+<ul>
+<li>Now supported for all RDS instance types (Aurora, MySQL, Oracle, MS SQL, etc.)</li>
+<li>Leverages AWS Key Management (KMS)</li>
+<li>Automated backups, snapshots, and read replicas are encrypted</li>
+<li>Encrypting existing databases is not yet supported. Must first create a copy.</li>
+</ul>
+<h2>Multi-AZ</h2>
+<p>Used for disaster recovery only (database failover). Exact copy of production database. Multi-AZ is on by default for Aurora, must be manually confgured for others.</p>
+<h2>Read Replicas</h2>
+<p>Read replicas are used for improved read performance and scaling.</p>
+<h3>Supported Engines</h3>
+<ul>
+<li>MySQL</li>
+<li>PostgreSQL</li>
+<li>MariaDB</li>
+<li>Aurora</li>
+</ul>
+<h3>Details</h3>
+<ul>
+<li>Used for scaling, not for disaster recovery</li>
+<li>Must have automated backups enabled</li>
+<li>Can have up to 5 replicas</li>
+<li>Can have read replicas of read replicas (watch out for latency)</li>
+<li>Esch read replica will have its own DNS endpoint</li>
+<li>You can have read replicas that have Multi-AZ</li>
+<li>Read replicas can be promoted to their own database. Breaks the replication.</li>
+<li>Can have read replica in a second region</li>
+</ul>
+<h2>DynamoDB</h2>
+<ul>
+<li>Stored on SSD storage</li>
+<li>Spread across 3 geographically distinct data centers</li>
+<li>Eventual Consistent Reads (Default)
+<ul>
+<li>Consistency between copies usually reached within 1 second</li>
+<li>Best Read Performance</li>
+</ul>
+</li>
+<li>Strongly Consistent Reads
+<ul>
+<li>Returns a result that reflects all writes that received a successful response prior to the read</li>
+</ul>
+</li>
+</ul>
+<h3>Pricing</h3>
+<ul>
+<li>Provisioned Throughput Capacity
+<ul>
+<li>Write throughput $0.0065 per hour for every 10 units</li>
+<li>Read throughput $0.0065 per hour for every 50 units</li>
+</ul>
+</li>
+<li>Storage costs of $0.25Gb per month</li>
+</ul>
+<h2>Redshift</h2>
+<p>Fast and powerful, fully managed, petabyte-scale scale data warehousing at an affordable price (compared to competitors in this space) of around $1,000 per terabyte per year.</p>
+<h3>OLAP</h3>
+<p>See OLAP Example above...</p>
+<h3>Configuration</h3>
+<ul>
+<li>Single Node (160Gb)</li>
+<li>Multi-Node
+<ul>
+<li>Leader Node (manages client connections and received queries)</li>
+<li>Compute Node (store data and perform queries and computations</li>
+<li>Up to 128 Compute Nodes</li>
+</ul>
+</li>
+</ul>
+<h3>Columnar Data Storage</h3>
+<ul>
+<li>Organizes data based on columns instead of rows</li>
+<li>Optimized for column-based queries used for data warehousing and analytics</li>
+<li>Optimized for aggregate computations over columnar data</li>
+<li>Columnar data is stored sequentially requiring far fewer I/O operations improving query prerformance</li>
+</ul>
+<h3>Advanced Compression</h3>
+<ul>
+<li>Columnar data compresses far more efficiently than row-based data</li>
+<li>Employs multiple compression techniques</li>
+<li>Does not require indexes or materialized views</li>
+<li>Uses less storage space than traditional RDMBS</li>
+</ul>
+<h3>Massive Parallel Processing (MPP)</h3>
+<ul>
+<li>Automatically distributes data and query load across all nodes</li>
+<li>Easy to add nodes to your data warehouse</li>
+<li>Scalable to maintain fast query performance as your data warehouse grows</li>
+</ul>
+<h3>Pricing</h3>
+<ul>
+<li>Compute Node Hours
+<ul>
+<li>Total number of hours you run across all your compute nodes for the billing period</li>
+<li>Billed for 1 unit per node per hour</li>
+<li>Wil not be charged for leader node hours; only compute nodes incur charges</li>
+</ul>
+</li>
+<li>Backup</li>
+<li>Data Transfer (only within a VPC, not outside it)</li>
+</ul>
+<h3>Security</h3>
+<ul>
+<li>Encrypted in transit using SSL/TLS</li>
+<li>Encrypted at rest using AES-256</li>
+<li>By default takes care of key management
+<ul>
+<li>Manage you own keys thorugh HSM</li>
+<li>AWS Key Managment Service (KMS)</li>
+</ul>
+</li>
+</ul>
+<h3>Availability</h3>
+<ul>
+<li>Currently only available in 1 AZ</li>
+<li>Can restore snapshots to new AZs in the event of an outage</li>
+</ul>
+<h2>Elasticache</h2>
+<p>Web services for in-memory cache in the cloud.</p>
+<ul>
+<li>Memcached</li>
+<li>Redis</li>
+</ul>
+<h2>Aurora</h2>
+<p>Only available on AWS. Compatible with MySQL.</p>
+<ul>
+<li>Performance is 5 times better than MySQL</li>
+<li>Provides high availability</li>
+<li>Cost effective, especially compared to commercial solutions such as Oracle</li>
+<li>Starts with 10Gb</li>
+<li>Scales in 10Gb increments to 64Tb (Storage autoscaling)</li>
+<li>Compute resources can scale up to 32vCPUs and 244GB of memory</li>
+<li>2 copies of your data is maintained in each AZ, with minimum of 3 AZs (6 copyies of your data)</li>
+<li>Transparently handles loss of database copies without affecting availability
+<ul>
+<li>2 copies can be lost for write availability</li>
+<li>3 copies can be lost for read availability</li>
+</ul>
+</li>
+<li>Self-healing</li>
+</ul>
+<h3>Replicas</h3>
+<ul>
+<li>2 types of replicas are available
+<ul>
+<li>Aurora Replicas (currently 15)</li>
+<li>MySQL Read Replicas (currently 5)</li>
+</ul>
+</li>
+</ul>
+</div></div>
+      <script>document.body.onkeyup = function(e) {
+if (e.keyCode === 39) window.location.href = 'Virtual Private Cloud (VPC).html';
+if (e.keyCode === 37) window.location.href = 'DNS 101   Route53.html';
+}</script>
+    </body>
+    </html>
+  

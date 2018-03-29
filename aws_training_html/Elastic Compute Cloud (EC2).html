@@ -1,0 +1,495 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- common.css -->
+      <style>* {-webkit-tap-highlight-color: rgba(0,0,0,0);}html {-webkit-text-size-adjust: none;}body {font-family: -apple-system, Helvetica, Arial, sans-serif;margin: 0;padding: 20px;color: #333;word-wrap: break-word;}h1, h2, h3, h4, h5, h6 {line-height: 1.1;}img {max-width: 100% !important;height: auto;}blockquote {margin: 0;padding: 0 15px;color: #777;border-left: 4px solid #ddd;}hr {background-color: #ddd;border: 0;height: 1px;margin: 15px 0;}code {font-family: Menlo, Consolas, 'Ubuntu Mono', Monaco, 'source-code-pro', monospace;line-height: 1.4;margin: 0;padding: 0.2em 0;font-size: 90%;background-color: rgba(0,0,0,0.04);border-radius: 3px;}pre > code {margin: 0;padding: 0;font-size: 100%;word-break: normal;background: transparent;border: 0;}ol {list-style-type: decimal;}ol ol, ul ol {list-style-type: lower-latin;}ol ol ol, ul ol ol, ul ul ol, ol ul ol {list-style-type: lower-roman;}table {border-spacing: 0;border-collapse: collapse;margin-top: 0;margin-bottom: 16px;}table th {font-weight: bold;}table th, table td {padding: 6px 13px;border: 1px solid #ddd;}table tr {border-top: 1px solid #ccc;}table tr:nth-child(even) {background-color: #f8f8f8;}input[type="checkbox"] {cursor: default;margin-right: 0.5em;font-size: 13px;}.task-list-item {list-style-type: none;}.task-list-item+.task-list-item {margin-top: 3px;}.task-list-item input {float: left;margin: 0.3em 1em 0.25em -1.6em;vertical-align: middle;}#tag-field {margin: 8px 2px 10px;}#tag-field .tag {display: inline-block;background: #cadff3;border-radius: 4px;padding: 1px 8px;color: black;font-size: 12px;margin-right: 10px;line-height: 1.4;}</style>
+      <!-- ace-static.css -->
+      <style>.ace_static_highlight {white-space: pre-wrap;}.ace_static_highlight .ace_gutter {width: 2em;text-align: right;padding: 0 3px 0 0;margin-right: 3px;}.ace_static_highlight.ace_show_gutter > .ace_line {padding-left: 2.6em;}.ace_static_highlight .ace_line {position: relative;}.ace_static_highlight .ace_gutter-cell {-moz-user-select: -moz-none;-khtml-user-select: none;-webkit-user-select: none;user-select: none;top: 0;bottom: 0;left: 0;position: absolute;}.ace_static_highlight .ace_gutter-cell:before {content: counter(ace_line, decimal);counter-increment: ace_line;}.ace_static_highlight {counter-reset: ace_line;}</style>
+      <style>.ace-chrome .ace_gutter {background: #ebebeb;color: #333;overflow : hidden;}.ace-chrome .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-chrome {background-color: #FFFFFF;color: black;}.ace-chrome .ace_cursor {color: black;}.ace-chrome .ace_invisible {color: rgb(191, 191, 191);}.ace-chrome .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-chrome .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-chrome .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-chrome .ace_invalid {background-color: rgb(153, 0, 0);color: white;}.ace-chrome .ace_fold {}.ace-chrome .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-chrome .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-chrome .ace_support.ace_type,.ace-chrome .ace_support.ace_class.ace-chrome .ace_support.ace_other {color: rgb(109, 121, 222);}.ace-chrome .ace_variable.ace_parameter {font-style:italic;color:#FD971F;}.ace-chrome .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-chrome .ace_comment {color: #236e24;}.ace-chrome .ace_comment.ace_doc {color: #236e24;}.ace-chrome .ace_comment.ace_doc.ace_tag {color: #236e24;}.ace-chrome .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-chrome .ace_variable {color: rgb(49, 132, 149);}.ace-chrome .ace_xml-pe {color: rgb(104, 104, 91);}.ace-chrome .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-chrome .ace_heading {color: rgb(12, 7, 255);}.ace-chrome .ace_list {color:rgb(185, 6, 144);}.ace-chrome .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-chrome .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-chrome .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-chrome .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-chrome .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-chrome .ace_gutter-active-line {background-color : #dcdcdc;}.ace-chrome .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-chrome .ace_storage,.ace-chrome .ace_keyword,.ace-chrome .ace_meta.ace_tag {color: rgb(147, 15, 128);}.ace-chrome .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-chrome .ace_string {color: #1A1AA6;}.ace-chrome .ace_entity.ace_other.ace_attribute-name {color: #994409;}.ace-chrome .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}</style>
+      <!-- export.css -->
+      <style>
+        body{margin:0 auto;max-width:800px;line-height:1.4}
+        #nav{margin:5px 0 10px;font-size:15px}
+        #titlearea{border-bottom:1px solid #ccc;font-size:17px;padding:10px 0;}
+        #contentarea{font-size:15px;margin:16px 0}
+        .cell{outline:0;min-height:20px;margin:5px 0;padding:5px 0;}
+        .code-cell{font-family:Menlo,Consolas,'Ubuntu Mono',Monaco,'source-code-pro',monospace;font-size:12px;}
+        .latex-cell{white-space:pre-wrap;}
+      </style>
+      <!-- User CSS -->
+      <style> .text-cell {font-size: 15px;}.code-cell {font-size: 12px;}.markdown-cell {font-size: 15px;}.latex-cell {font-size: 15px;}</style>
+    </head>
+    <body>
+      <div id="nav"><div>Next: <a href='DNS 101   Route53.html'>DNS 101 / Route53</a>, Previous: <a href='S3 and CloudFront (CDN).html'>S3 and CloudFront (CDN)</a>, Up: <a href='index.html'>Index</a></div></div>
+      <div id="titlearea">
+        <h2>Elastic Compute Cloud (EC2)</h2>
+      </div>
+      <div id="contentarea"><div class="cell markdown-cell"><h2>EC2 101</h2>
+<h3>Options</h3>
+<ul>
+<li>On Demand -- Pay a fixed rate by the hour (or second) with no commitment</li>
+<li>Reserved -- Capacity reservation on 1 or 3 year terms. Reduced cost</li>
+<li>Spot -- Bid on price. Price based on current demand</li>
+<li>Dedicated Hosts -- Physical EC2 server dedicated for your use</li>
+</ul>
+<h3>On Demand</h3>
+<ul>
+<li>Low cost, flexible without up-front payment or long-term commitment</li>
+<li>Applications with short term, spiky, or unpredictable workloads that cannot be interrupted</li>
+<li>Applictions being developed or tested for the first time</li>
+</ul>
+<h3>Reserved</h3>
+<ul>
+<li>Applications with steady state or predictable usage</li>
+<li>Applications that require reserved capacity</li>
+<li>Upfront payments reduce total computing costs even further
+<ul>
+<li>Standard RI's (Up to 75% off compared to On-Demand)</li>
+<li>Convertable RI's (Up to 54% off compared to On-Demand) and can change attributes of the RI</li>
+<li>Scheduled RI's available to launch withing the time window you reserve.</li>
+</ul>
+</li>
+</ul>
+<h3>Spot</h3>
+<ul>
+<li>Applications that have flixible start and end times</li>
+<li>Applications that are only feasible at very low compute prices</li>
+<li>Users with urgent computing needs for large amounts of additional capacity</li>
+</ul>
+<h3>Dedicated Hosts</h3>
+<ul>
+<li>Useful for regulatory requirements that may not support multi-tenant virtualization</li>
+<li>Licenseing that does not support multi-tenancy or cloud deployments</li>
+<li>Can be purchased on-demand (hourly)</li>
+<li>Can be purchased as a reservation for up to 70% off the On-Demand price</li>
+</ul>
+<h2>EC2 Instance Types</h2>
+<p>Memorazation Device: Dr Mc GIFT PX (Remember the cartoon duck from lecture slide)</p>
+<ul>
+<li>D2 -- Dense Storage (Fileservers, Date Warehousing, Hadoop)</li>
+<li>R4 -- Memory Optimized (Memory Intensive Apps, DBs)</li>
+<li>M4 -- General Purpose (Application Servers)</li>
+<li>C4 -- Compute Optimized (CPU Intensive Apps, DBS)</li>
+<li>G2 -- Graphics Intensive (Video Encodeing, 3D App Streaming)</li>
+<li>I2 -- High Speed Storage (NoSQL DBs, Data Warehousing, etc.)</li>
+<li>F1 -- Field Programmable Gate Array (Hardware acceleration for code)</li>
+<li>T2 -- Lowest Cost, General Purpose (Web Servers, Small DBs)</li>
+<li>P2 -- Graphics/General Purpose GPU (Macine Learning, Crypto Currency mining, etc.)</li>
+<li>X1 -- Memory Optimized (SAP HANA, Apache Spark, etc.)</li>
+</ul>
+<h2>Elastic Block Storage (EBS)</h2>
+<h3>SSD</h3>
+<ul>
+<li>General Purpose SSD (GP2)
+<ul>
+<li>Balances both price and performance</li>
+<li>Ratio of 3 IOPS per GB, up to 10,000 IOPS, burst up to 3,000 IOPS for extended periods of time for volumns 3.334 GiB and above</li>
+</ul>
+</li>
+<li>Provisioned IOPS SSD (IO1)
+<ul>
+<li>Designed for I/O intensive applications such as large RDBMS or NoSQL</li>
+<li>Use if you need more than 10,000 IOPS</li>
+<li>Provision up to 20,000 IOPS per volume</li>
+</ul>
+</li>
+</ul>
+<h3>HDD</h3>
+<ul>
+<li>Throughput Optimized HDD (ST1)
+<ul>
+<li>Big Data</li>
+<li>Data Warehouse</li>
+<li>Log Processing</li>
+<li>Cannot be a boot volume</li>
+</ul>
+</li>
+<li>Cold HDD (SC1)
+<ul>
+<li>Lowest cost storage for infequently accessed workloads</li>
+<li>File Server</li>
+<li>Cannot be boot volume</li>
+</ul>
+</li>
+<li>Magnetic (Standard)
+<ul>
+<li>Lowest cost per gigabyte</li>
+<li>Bootable</li>
+</ul>
+</li>
+</ul>
+<h2>Exam Tips</h2>
+<h3>EC2 Pricing Models</h3>
+<ul>
+<li>Know the differences between
+<ul>
+<li>On Demand</li>
+<li>Spot</li>
+<li>Reserved</li>
+<li>Dedicated Hosts</li>
+</ul>
+</li>
+<li>Remember with spot instances
+<ul>
+<li>If you terminate the instance, you pay for the hour</li>
+<li>If AWS terminates the spot instance, you get the hour it was terminated in for free</li>
+</ul>
+</li>
+</ul>
+<h3>EBS</h3>
+<ul>
+<li>Consists of
+<ul>
+<li>SSD, General Purpoee -- GP2 (Up to 10,000 IOPS)</li>
+<li>SSD, Provisioned IOPS -- IO1 (Up to 10,000 IOPS)</li>
+<li>HDD, Throughput Optimized -- ST1 (frequently aceessed workloads)</li>
+<li>HDD, Cold -- SC1 (less frequently accessed data)</li>
+<li>HDD, Magnetic -- Standard (cheap, infrequently accessed)</li>
+</ul>
+</li>
+<li>Cannot mount 1 EBS volume to multiple EC2 instances, instead use EFS</li>
+</ul>
+<h3>EC2 Instance Types</h3>
+<ul>
+<li>Remember Dr Mc GIFT PX
+<ul>
+<li>D for Density</li>
+<li>R for RAM</li>
+<li>M for Main choice</li>
+<li>C for Compute</li>
+<li>G for Graphics</li>
+<li>I for IOPS</li>
+<li>F for Field Programmable Gate Array (FPGA)</li>
+<li>T for T2 Micro -- cheap general purpose</li>
+<li>P for Pics -- Graphics</li>
+<li>X for Extreme Memory</li>
+</ul>
+</li>
+</ul>
+<h2>EC2 Labs</h2>
+<h3>Step 1</h3>
+<p>Choose an Amazon Machine Image (AMI)</p>
+<h3>Step 2</h3>
+<p>Choose an Instance Type (Dr Mc GIFT PX). Example: t2.micro</p>
+<h3>Step 3</h3>
+<p>Configure Instance Details. Number of instances, purchasing options, network, IAM role, shutdown behavior, monitoring, etc.</p>
+<p>Exam Tip: 1 subnet for 1 availablity zone</p>
+<h3>Step 4</h3>
+<p>Add Storage. (SSD, HDD types)</p>
+<p>Exam Tip: By default storage volumns are deleted on instance termination.</p>
+<h3>Add Tags</h3>
+<p>Add metadata to instances.</p>
+<h3>Configure Security Group</h3>
+<p>This is virtual firewall configuration settings.</p>
+<h3>Exam Tips</h3>
+<ul>
+<li>Termination Protection is turned off by default</li>
+<li>On an EBS-backed instance the default action is for the root EBS volume to be deleted on instance termination</li>
+<li>EBS Root Volumes of your DEFAULT AMIs cannot by encrypted. It is possible to use third-party tools (e.g. Bit Locker) to encrypt the root volume. Or, this can be done when creating AMIs in the AWS console or using the API.</li>
+<li>Additional volumes can be encrypted</li>
+</ul>
+<h2>Security Groups</h2>
+<p>Virtual firewalls.</p>
+<ul>
+<li>Changing FW rules applies immediately</li>
+<li>Security Groups are stateful. Adding inbound rule adds matching outbound rule.</li>
+<li>Network Access Control Lists are stateless. (These are separate from Security Groups)</li>
+<li>Deny by default. Add rules to allow.</li>
+<li>Cannot block specific IP addressses using Security Groups, instead use Netowrk Access Control Lists</li>
+</ul>
+<h2>Upgrading EBS Volumes</h2>
+<p>EBS volumes must be in the same availability zone as instance. Volumes can be modified to change their type and size (Note: Standard magnetic volumes cannot be modified).</p>
+<h3>Exam Tips</h3>
+<ul>
+<li>Volumes exist on EBS</li>
+<li>Snapshots exist on S3</li>
+<li>Snapshots are point-in-time copies of volumes</li>
+<li>Snapshots are incremental</li>
+<li>First snapshots may take some time</li>
+<li>Stop instance to create EBS volumes that serve as root devices and to take snapshots</li>
+<li>It is possible to take snapshots while the instance is running</li>
+<li>You can create AMIs from both Volumes and Snapshots</li>
+<li>You can change EBS volume size on the fly, including changing size and storage type</li>
+<li>Volumes will ALWAYS be in the same availabilty zone as EC2 instance</li>
+<li>To move EC2 volume from one AZ/Region to another, take a snapshot or an image of it, then copy it to the new AZ/Region.</li>
+<li>Snapshots of encrypted volumes are encrypted</li>
+<li>Volumes restored from encrypted snapshots are encrypted</li>
+<li>You can share shapshots with other AWS accounts or publicly, but only if they are unencrypted</li>
+</ul>
+<h2>RAID Volumes and Snapshots</h2>
+<ul>
+<li>Redundant Array of Independent Disks
+<ul>
+<li>RAID 0 -- Striped, No Redundancy, Good Performance</li>
+<li>RAID 1 -- Mirrored, Redundancy</li>
+<li>RAID 5 -- Good for reads, bad for writes, AWS does not recommend on EBS</li>
+<li>RAID 10 -- Striped and Mirrored, Good Redundancy, Good Performance</li>
+</ul>
+</li>
+</ul>
+<p>Taking snapshots of instance with RAID requires an application consistent snapshot.</p>
+<ul>
+<li>Freeze the file system</li>
+<li>Unmount the RAID array</li>
+<li>Shut down the associated EC2 instance</li>
+</ul>
+<h2>Encrypted Root Device Volume</h2>
+<ol>
+<li>Shutdown the instance</li>
+<li>Create a snapshot</li>
+<li>Copy snapshot and turn on encryption (can be copied to another AZ/Region)</li>
+</ol>
+<h2>AMI Types</h2>
+<p>All AMIs are categorized as either backed by Amazon EBS or backed by instance store.</p>
+<p>For EBS Volumes: The root device for an instance launched from AMI is an Amazon EBS volume created from Amazon EBS snapshot.</p>
+<p>For Instance Store Volumes: The root device for an instance launched form the AMI is an instance store volume created from a template stored in Amazon S3.</p>
+<h2>Elastic Load Balancers (ELB)</h2>
+<ul>
+<li>Application Load Balancer (Layer 7)</li>
+<li>Classic Load Balancer (Layer 4)</li>
+</ul>
+<p>Exam questions currently cover Classic Load Balancers. Application Load Balancer is relatively new to AWS.</p>
+<h3>Exam Tips</h3>
+<ul>
+<li>Instances monitored by ELB are reported as InService or OutOfService</li>
+<li>Health checks check instances health by talking to them</li>
+<li>Have their own DNS name. You're never given an IP address</li>
+<li>Read the ELB FAQ for Classic Load Balancers</li>
+</ul>
+<h2>CloudWatch</h2>
+<p>CloudWatch is under Managment Tools in the AWS Dashboard.</p>
+<p>There are 4 types of widgets available. Use Markdown to creating metrics components.</p>
+<h3>Exam Tips</h3>
+<ul>
+<li>Dashboard -- Create dashboards to monitor your AWS environment</li>
+<li>Alarms -- Set alarms that notify when configured threadholds are hit</li>
+<li>Events -- Respond to state changes in your AWS resources</li>
+<li>Logs -- Aggregate, monitor and store log files</li>
+</ul>
+<h2>AWS Command Line Interface (CLI)</h2>
+<p>AWS CLI is automaitcally installed on Amazon Linux AMI.</p>
+<h2>Identy Access Management Roles</h2>
+<p>Roles are Global. Using roles allows access from CLI/API without storing credentials locally.</p>
+<h2>Metadata</h2>
+<p>SSH into instance and use <code>curl</code> to read metadata. It's important to remember this URL for the exam.</p>
+<pre><code>curl http://169.254.169.254/latest/meta-data/
+</code></pre>
+<p>Read public IPv4 address:</p>
+<pre><code>curl http://169.254.169.254/latest/meta-data/public-ipv4
+</code></pre>
+<h2>Launch Configurations and Auto Scaling Groups</h2>
+<p>In order to create Auto Scaling Groups you must first create a Launch Configuration.</p>
+<h3>Launch Configrations</h3>
+<ul>
+<li>Simalar process as creating EC2 instances.</li>
+<li>Bash scripts can be entered in "Advanced Details" under "User data" as text or file. Can be base64 encoded if checkbox is selected.</li>
+</ul>
+<h2>Placement Groups</h2>
+<p>Logical grouping of instances within an Availability Zone. Enables applications to participate in low latency, 10 Gbps network. Recommended for applicaitons that benefit from low latency, high network throughput, or both. (Hadoop clusters, etc.)</p>
+<ul>
+<li>Can't span multiple Availability Zones</li>
+<li>Name must be unique within your AWS account</li>
+<li>Instance types are limited (Compute Optimized, GPU, Memory Optimized, Storage Optimized)</li>
+<li>Homogenous instances are recommended (Same family and size)</li>
+<li>Can't be merged</li>
+<li>Existing instances can't be moved into a placement group. You can create an AMI from your existing instance and launch a new instance from the AMI.</li>
+</ul>
+<h2>Elastic File System (EFS)</h2>
+<p>File storage service that can grow or shrink automatically as you add and remove files.</p>
+<ul>
+<li>Supports Network File System version 4 (NFSv4) protocol</li>
+<li>Only pay for the storage you use</li>
+<li>Can scale to petabyte scale</li>
+<li>Can support thousands of concurrent NFS connections</li>
+<li>Data is stored across multiple AZs within a region</li>
+<li>Read after write consistence</li>
+<li>Block based storage</li>
+</ul>
+<h2>Lambda Concepts</h2>
+<p>A compute service where you can upload code functions. Lamda takes care of provisioning and managing the servers that run the code. No operating systems, patching, scaling, etc. to worrry about.</p>
+<ul>
+<li>As an event-driven service (e.g. S3 or DynamoDB events)</li>
+<li>As a compute service in response to HTTP requests via API Gateway or AWS SDK.</li>
+</ul>
+<h3>Triggers</h3>
+<ul>
+<li>API Gateway</li>
+<li>AWS IoT</li>
+<li>Alexa Skills Kit</li>
+<li>Alexa Smart Home</li>
+<li>CloudFront</li>
+<li>CloudWatch Events</li>
+<li>CloudWatch Logs</li>
+<li>CodeCommit</li>
+<li>Cognito Sync Trigger</li>
+<li>DynamoDB</li>
+<li>Kinesis</li>
+<li>S3</li>
+<li>SNS</li>
+</ul>
+<h3>Languages</h3>
+<ul>
+<li>Node.js</li>
+<li>Java</li>
+<li>Python</li>
+<li>C#</li>
+</ul>
+<h3>Pricing</h3>
+<ul>
+<li>Number of requests
+<ul>
+<li>First 1 million requests are free. $0.20 per 1 million requests</li>
+</ul>
+</li>
+<li>Duration
+<ul>
+<li>Duration is calculated from the time your code begins executing until it returns or otherwise terminates, rounded up to th enearest 100ms. Price depends on the amount of memory you allocate to your function at a rate of $0.00001667/GB-second used.</li>
+</ul>
+</li>
+<li>5 minute threashold per function</li>
+<li>No servers</li>
+<li>Continuous scaling</li>
+<li>Super cheap</li>
+</ul>
+<p>Amazon Echo is an example use case for Lambda.</p>
+<h3>Exam Tips</h3>
+<ul>
+<li>Scales out (not up) automatically</li>
+<li>Functions are independent, 1 event = 1 function</li>
+<li>Serverless</li>
+<li>Know what services are serverless!</li>
+<li>Functions can trigger other functions, 1 event can = n fuctions if functions trigger functions</li>
+<li>Architectures can get extremely complicated, ASW X-ray helps with debugging</li>
+<li>Can do things globally, can use it to back up S3 buckets to other S3 buckets, etc.</li>
+<li>Know your triggers!</li>
+<li>5 minute max execution time</li>
+</ul>
+<h2>EC2 Summary and More Exam Tips</h2>
+<ul>
+<li>READ THE EC2 FAQ</li>
+<li>Know the difference between:
+<ul>
+<li>On Demand</li>
+<li>Spot</li>
+<li>Reserved</li>
+<li>Dedicated Hosts</li>
+</ul>
+</li>
+<li>Spot Instances
+<ul>
+<li>If you terminate the instance, you pay for the hour</li>
+<li>If AWS terminates the instance, you get the hour for free</li>
+</ul>
+</li>
+<li>Dr Mc GIFT PX
+<ul>
+<li>Refer to <em>EC2 Instance Types</em> above in these notes</li>
+</ul>
+</li>
+<li>EBS consists of:
+<ul>
+<li>SSD -- General Purpose -- GP2 (Up to 10,000 IOPS)</li>
+<li>SSD -- Provistioned IOPS -- IO1 (More than 10,000 IOPS)</li>
+<li>HDD -- Throughput Optimized -- ST1 -- frequently accessed workloads</li>
+<li>HDD -- Cold -- SC1 -- less frequently accessed data</li>
+<li>HDD -- Magnetic -- Standard -- cheap, infrenquently accessed data</li>
+</ul>
+</li>
+<li>You cannot mount one EBS volume to multiple EC2 instances, instead use EFS</li>
+<li>Termination Protection is off by default</li>
+<li>Root EBS volume is deleted on instnace termaination by default</li>
+<li>Root Volumes cannot be encrypted by default, you need third-party tools to encrypt</li>
+<li>Addtional Volumes can be encrypted</li>
+<li>Volumes exist in EBS -- Virtual Hard Disk</li>
+<li>Snapshots
+<ul>
+<li>Stored in S3</li>
+<li>Point-in-time copies of Volumes</li>
+<li>Are incremental, only changes since last snapshot are stored</li>
+<li>First snapshot can take some time to create</li>
+<li>Encrypted volumes are encrypted automatically</li>
+<li>Volumes restored from encrypted snapshots remain encrypted</li>
+<li>Can be shared, but only if unencrypted</li>
+<li>Can be shared between AWS accounts or made public</li>
+<li>Stop the instance before taking snapshots of a root volume</li>
+</ul>
+</li>
+<li>EBS vs Instance Store
+<ul>
+<li>Sometimes called Ephemeral Storage</li>
+<li>Cannot be stopped, If the underlying host fails all data is lost</li>
+<li>EBS backed instances can be stopped, data will persist</li>
+<li>Either type can be rebooted without losing data</li>
+<li>By default root volumes are deleted on termination, but EBS can be set to keep the root volume</li>
+</ul>
+</li>
+<li>Snapshots of RAID arrays
+<ul>
+<li>Problem -- Snapshots lose data in RAID caches</li>
+<li>Solution -- Take an application consistent snapshot
+<ul>
+<li>Freeze the file system</li>
+<li>Unmount the RAID array</li>
+<li>Shut down the associated EC2 instance</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Amazon Macine Images
+<ul>
+<li>AMIs are regional -- Can only launch from the region where stored. Can be copied to other regions with CLI or API.</li>
+</ul>
+</li>
+<li>Standard Monitoring = 5 mins</li>
+<li>Detailed Monitoring = 1 min</li>
+<li>CloudWatch is for performace monitoring</li>
+<li>CloudTrail is for auditing</li>
+<li>CloudWatch
+<ul>
+<li>Dashboards</li>
+<li>Alarms</li>
+<li>Events</li>
+<li>Logs</li>
+</ul>
+</li>
+<li>Roles
+<ul>
+<li>More secure than storing access keys and secrets</li>
+<li>Easier to manage</li>
+<li>Can be assigned to instance after it has been provisioned via CLI or AWS console</li>
+<li>Global</li>
+</ul>
+</li>
+<li>Instance Meta-data
+<ul>
+<li>Get information about instances such as IP address</li>
+<li>curl <code>http://169.254.169.254/latest/meta-data/</code></li>
+</ul>
+</li>
+<li>Elastic File System (EFS) -- Probably not on exam currently
+<ul>
+<li>NFSv4</li>
+<li>Pay only for storage you use (no provisioning)</li>
+<li>Scales up to petabytes</li>
+<li>Supports thousands of concurrent NFS connections</li>
+<li>Data is stored across multiple AZs within a region</li>
+<li>Read after write consistency</li>
+</ul>
+</li>
+<li>Lambda
+<ul>
+<li>Serverless compute, event driven or response to HTTP via API Gateway or API calls</li>
+</ul>
+</li>
+</ul>
+</div></div>
+      <script>document.body.onkeyup = function(e) {
+if (e.keyCode === 39) window.location.href = 'DNS 101   Route53.html';
+if (e.keyCode === 37) window.location.href = 'S3 and CloudFront (CDN).html';
+}</script>
+    </body>
+    </html>
+  

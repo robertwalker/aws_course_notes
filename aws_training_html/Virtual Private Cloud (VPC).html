@@ -1,0 +1,385 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- common.css -->
+      <style>* {-webkit-tap-highlight-color: rgba(0,0,0,0);}html {-webkit-text-size-adjust: none;}body {font-family: -apple-system, Helvetica, Arial, sans-serif;margin: 0;padding: 20px;color: #333;word-wrap: break-word;}h1, h2, h3, h4, h5, h6 {line-height: 1.1;}img {max-width: 100% !important;height: auto;}blockquote {margin: 0;padding: 0 15px;color: #777;border-left: 4px solid #ddd;}hr {background-color: #ddd;border: 0;height: 1px;margin: 15px 0;}code {font-family: Menlo, Consolas, 'Ubuntu Mono', Monaco, 'source-code-pro', monospace;line-height: 1.4;margin: 0;padding: 0.2em 0;font-size: 90%;background-color: rgba(0,0,0,0.04);border-radius: 3px;}pre > code {margin: 0;padding: 0;font-size: 100%;word-break: normal;background: transparent;border: 0;}ol {list-style-type: decimal;}ol ol, ul ol {list-style-type: lower-latin;}ol ol ol, ul ol ol, ul ul ol, ol ul ol {list-style-type: lower-roman;}table {border-spacing: 0;border-collapse: collapse;margin-top: 0;margin-bottom: 16px;}table th {font-weight: bold;}table th, table td {padding: 6px 13px;border: 1px solid #ddd;}table tr {border-top: 1px solid #ccc;}table tr:nth-child(even) {background-color: #f8f8f8;}input[type="checkbox"] {cursor: default;margin-right: 0.5em;font-size: 13px;}.task-list-item {list-style-type: none;}.task-list-item+.task-list-item {margin-top: 3px;}.task-list-item input {float: left;margin: 0.3em 1em 0.25em -1.6em;vertical-align: middle;}#tag-field {margin: 8px 2px 10px;}#tag-field .tag {display: inline-block;background: #cadff3;border-radius: 4px;padding: 1px 8px;color: black;font-size: 12px;margin-right: 10px;line-height: 1.4;}</style>
+      <!-- ace-static.css -->
+      <style>.ace_static_highlight {white-space: pre-wrap;}.ace_static_highlight .ace_gutter {width: 2em;text-align: right;padding: 0 3px 0 0;margin-right: 3px;}.ace_static_highlight.ace_show_gutter > .ace_line {padding-left: 2.6em;}.ace_static_highlight .ace_line {position: relative;}.ace_static_highlight .ace_gutter-cell {-moz-user-select: -moz-none;-khtml-user-select: none;-webkit-user-select: none;user-select: none;top: 0;bottom: 0;left: 0;position: absolute;}.ace_static_highlight .ace_gutter-cell:before {content: counter(ace_line, decimal);counter-increment: ace_line;}.ace_static_highlight {counter-reset: ace_line;}</style>
+      <style>.ace-chrome .ace_gutter {background: #ebebeb;color: #333;overflow : hidden;}.ace-chrome .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-chrome {background-color: #FFFFFF;color: black;}.ace-chrome .ace_cursor {color: black;}.ace-chrome .ace_invisible {color: rgb(191, 191, 191);}.ace-chrome .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-chrome .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-chrome .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-chrome .ace_invalid {background-color: rgb(153, 0, 0);color: white;}.ace-chrome .ace_fold {}.ace-chrome .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-chrome .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-chrome .ace_support.ace_type,.ace-chrome .ace_support.ace_class.ace-chrome .ace_support.ace_other {color: rgb(109, 121, 222);}.ace-chrome .ace_variable.ace_parameter {font-style:italic;color:#FD971F;}.ace-chrome .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-chrome .ace_comment {color: #236e24;}.ace-chrome .ace_comment.ace_doc {color: #236e24;}.ace-chrome .ace_comment.ace_doc.ace_tag {color: #236e24;}.ace-chrome .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-chrome .ace_variable {color: rgb(49, 132, 149);}.ace-chrome .ace_xml-pe {color: rgb(104, 104, 91);}.ace-chrome .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-chrome .ace_heading {color: rgb(12, 7, 255);}.ace-chrome .ace_list {color:rgb(185, 6, 144);}.ace-chrome .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-chrome .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-chrome .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-chrome .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-chrome .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-chrome .ace_gutter-active-line {background-color : #dcdcdc;}.ace-chrome .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-chrome .ace_storage,.ace-chrome .ace_keyword,.ace-chrome .ace_meta.ace_tag {color: rgb(147, 15, 128);}.ace-chrome .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-chrome .ace_string {color: #1A1AA6;}.ace-chrome .ace_entity.ace_other.ace_attribute-name {color: #994409;}.ace-chrome .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}</style>
+      <!-- export.css -->
+      <style>
+        body{margin:0 auto;max-width:800px;line-height:1.4}
+        #nav{margin:5px 0 10px;font-size:15px}
+        #titlearea{border-bottom:1px solid #ccc;font-size:17px;padding:10px 0;}
+        #contentarea{font-size:15px;margin:16px 0}
+        .cell{outline:0;min-height:20px;margin:5px 0;padding:5px 0;}
+        .code-cell{font-family:Menlo,Consolas,'Ubuntu Mono',Monaco,'source-code-pro',monospace;font-size:12px;}
+        .latex-cell{white-space:pre-wrap;}
+      </style>
+      <!-- User CSS -->
+      <style> .text-cell {font-size: 15px;}.code-cell {font-size: 12px;}.markdown-cell {font-size: 15px;}.latex-cell {font-size: 15px;}</style>
+    </head>
+    <body>
+      <div id="nav"><div>Previous: <a href='Databases.html'>Databases</a>, Up: <a href='index.html'>Index</a></div></div>
+      <div id="titlearea">
+        <h2>Virtual Private Cloud (VPC)</h2>
+      </div>
+      <div id="contentarea"><div class="cell markdown-cell"><h2>Virtual Private Cloud (VPC) Overview</h2>
+<p>Amazon Virtual Private Cloud (Amazon VPC) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resoruces in a virtual network that you define. you have complete control over your virtual networking environment.</p>
+<h4>Includes</h4>
+<ul>
+<li>Selection of your own IP address range</li>
+<li>Creation of subnets</li>
+<li>Configuration of route tables and network gateways</li>
+</ul>
+<p>You can easily customize the network configuration for your Amazon Virtual Private Cloud (VPC).</p>
+<p>Example: Create a public-facing subnet for your web servers that has access to the Internet, and place your backend systems, such as databases or application servers in a private subnet with no Internet access.</p>
+<p>You can leverage multiple layers of security, including security groups and network access control lists, to help control access to Amazon EC2 instances in each subnet.</p>
+<h3>Exam Tips</h3>
+<ul>
+<li>Security Groups can span subnets</li>
+<li>1 subnet, 1 Availability Zone (AZ)</li>
+<li>1 Internet Gateway per VPC</li>
+<li>Internet Gateways are Global</li>
+</ul>
+<h4>Private IP ranges</h4>
+<ul>
+<li>10.0.0.0 - 10.255.255.255 (10/8 prefix)</li>
+<li>172.16.0/0 - 172.31.255.255 (172.16/12 prefix)</li>
+<li>192.168.0.0 - 192.168.255.255 (192.168/16 prefix)</li>
+</ul>
+<p><a href="http://cidr.xyz">CIDR.xyz</a> -- An interactive IP address and CIDR range visualizer</p>
+<p>Smallest IP prifix allowed by Amazon is 10/28 prefix (16 IPs)</p>
+<h3>Features of a VPC</h3>
+<ul>
+<li>Launch instances into a subnet of your choosing</li>
+<li>Assign custom IP address ranges in each subnet</li>
+<li>Configure route tables between subnets</li>
+<li>Create Internet gateway and attach it to your VPC (again 1 Internet Gateway per VPC)</li>
+<li>Much better security control over your AWS resources</li>
+<li>Instance security groups (can span AZs and subnets)</li>
+<li>Subnet network Access Control Lists (ACLs)</li>
+</ul>
+<h3>Default VPC vs. Custom VPC</h3>
+<ul>
+<li>Default VPC is provisioned by Amazon allowing you to immediately deploy instances</li>
+<li>All subnets in Default VPC have a route to the Internet</li>
+<li>You do not get private subnets in a Default VPC, must be set up</li>
+<li>Each EC2 instance has both a public and private IP address when deployed to a Default VPC</li>
+<li>Instances deployed to a Custom VPC that has a private subnet you only get a private IP address</li>
+</ul>
+<h3>VPC Peering</h3>
+<ul>
+<li>Allows you to connect one VPC to another via a direct network route using private IP addresses</li>
+<li>Instances behave as if they were on the same private network</li>
+<li>You can peer VPCs with other AWS accounts as well as with other VPCs in the same account</li>
+<li>Peering is in a star configuration (i.e. 1 central VPC peers with 4 others). NO TRANSITIVE PEERING!!!</li>
+</ul>
+<h3>More Exam Tips</h3>
+<ul>
+<li>Think of a VPC as a logical datacenter in AWS</li>
+<li>Consists of
+<ul>
+<li>IGWs (i.e. Virtual Private Internet Gateways)</li>
+<li>Route Tables</li>
+<li>Network Access Control Lists (ACLs)</li>
+<li>Subnets</li>
+</ul>
+</li>
+<li>Security Groups</li>
+<li>1 Subnet = 1 Availability Zone (AZ)</li>
+<li>Security Groups are Stateful; Network Access Control Lists are Stateless</li>
+<li>NO TRANSITIVE PEERING</li>
+</ul>
+<h2>VPC Lab Notes</h2>
+<ul>
+<li>Create VPC
+<ul>
+<li>VPC Name</li>
+<li>IPv4 CIDR block: 10.0.0.0/16</li>
+<li>IPv6 CIDR block:
+<ul>
+<li>No IPv6 Block</li>
+<li>Amazon provided IPv6 CIDR block (selected)</li>
+</ul>
+</li>
+<li>Tenancy:
+<ul>
+<li>Default (selected)</li>
+<li>Dedicated [Hardware]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>After creating a VPC
+<ul>
+<li>Shares subnets with Default VPC (uses same list)</li>
+<li>Creates a new route table</li>
+<li>No gateways created (leaves the Default VPC IGW)</li>
+<li>Creates default network ACL</li>
+<li>Creates default Security Group</li>
+</ul>
+</li>
+<li>Create Subnet
+<ul>
+<li>Name Tag: 10.0.1.0 -</li>
+<li>VPC: Select new VPC from list</li>
+<li>VPC CIDRs: Displays based on VPC selected</li>
+<li>Availability Zone: us-east1a (These are per account. Actual AZs are randomized by Amazon)</li>
+<li>IPv4 CIDR block: 10.0.1.0/24</li>
+<li>IPv4 CIDR block:
+<ul>
+<li>Don't assign an IPv6 CIDR (selected)</li>
+<li>Specify a custom IPv6 CIDR</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>After creating subnet
+<ul>
+<li>251 IP addresses available for your use
+<ul>
+<li>10.0.0.0 -- Network Address</li>
+<li>10.0.0.1 -- Reserved by AWS for the VPC router</li>
+<li>10.0.0.2 -- Reserved by AWS for DNS server</li>
+<li>10.0.0.3 -- Reserved by AWS for future use</li>
+<li>10.0.0.255 -- Network Broadcast Address</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Repeat Create Subnet for 10.0.2.0 -</li>
+<li>Create Internet Gateway
+<ul>
+<li>Name tag: MyIGW</li>
+</ul>
+</li>
+<li>Attach Gateway (Detached by default)
+<ul>
+<li>Can only attach 1 IGW per VPC</li>
+</ul>
+</li>
+<li>Create Route Table
+<ul>
+<li>Name tag: MyInternetRouteOut</li>
+<li>VPC: Select VPC from list</li>
+</ul>
+</li>
+<li>Update New Route Table
+<ul>
+<li>Select [Routes] tab and press [Add another route]
+<ul>
+<li>Destination: 0.0.0.0/0</li>
+<li>Target: Select your IGW</li>
+<li>Press [Save]</li>
+</ul>
+</li>
+<li>Press [Add another route] to add IPv6
+<ul>
+<li>Destination: ::/0</li>
+<li>Target: Select your IGW</li>
+<li>Press [Save]</li>
+</ul>
+</li>
+<li>Select [Subnet Associations] tab
+<ul>
+<li>Press [Edit]</li>
+<li>Select Subnet (10.1.1.0 - us-east-1a)</li>
+<li>Press [Save]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Update Subnets
+<ul>
+<li>Select your public subnet (10.0.1.0 - us-east-1a)</li>
+<li>Select [Subnet Actions] -&gt; [Modify auto-assigned IP settings]</li>
+<li>Enable auto-assign public IPv4 addresses (checked)</li>
+</ul>
+</li>
+<li>Launch an EC2 Instance into your new VPC
+<ul>
+<li>Network: Select your VPC</li>
+<li>Subnet: Select 10.0.1.0 - us-east-1a</li>
+<li>Leave rest of details at default</li>
+<li>Press [Add Storage] and Add Tags</li>
+<li>Create a new Security Group (Security Groups don't span VPCs)</li>
+<li>Launch EC2 Instance</li>
+</ul>
+</li>
+<li>Launch an EC2 Instance into your private Subnet
+<ul>
+<li>Use defualt Security Group for this one</li>
+</ul>
+</li>
+</ul>
+<h3>Your VPC So Far (Diagram)</h3>
+<p><a href="resources/1B6FFBAA6138DD9CD3853B5499F95B3D.png">VPC with Public &amp; Private Subnets (PNG)</a></p>
+<h3>Lab Notes -- Part 2</h3>
+<ul>
+<li>Create new Security Group
+<ul>
+<li>Security group name: My-RDS-SG</li>
+<li>Description: My-RDS-SG</li>
+<li>Security group rules [Inbound]
+<ul>
+<li>See Rules Table below...</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>In EC2 assign your new Security Group</li>
+</ul>
+<h4>Rules</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Protocol</th>
+<th>Port Range</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SSH</td>
+<td>TCP</td>
+<td>22</td>
+<td>Custom: 10.0.1.0/24</td>
+</tr>
+<tr>
+<td>MySQL/Aurora</td>
+<td>TCP</td>
+<td>3306</td>
+<td>Custom: 10.0.1.0/24</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>TCP</td>
+<td>80</td>
+<td>Custom: 10.0.1.0/24</td>
+</tr>
+<tr>
+<td>HTTPS</td>
+<td>TCP</td>
+<td>443</td>
+<td>Custom: 10.0.1.0/24</td>
+</tr>
+<tr>
+<td>All ICMP -IPv</td>
+<td>ICMP</td>
+<td>0 - 65535</td>
+<td>Custom: 10.0.1.0/24</td>
+</tr>
+</tbody>
+</table>
+<h2>NAT Instances &amp; NAT Gateways</h2>
+<h3>Lab Notes</h3>
+<h4>Creating a NAT Instance</h4>
+<ul>
+<li>Select EC2 form AWS managmentment console</li>
+<li>Click [Launch Instance] button</li>
+<li>Select [Community AMIs] in sidebar</li>
+<li>Search for <code>NAT</code></li>
+<li>Find <code>amzn-ami-vpc-nat-hvm-2014.09.1.x86_64-gp2</code> and press [Select] button</li>
+<li>Choose a t2.micro Instance Type</li>
+<li>Use defaults except:
+<ul>
+<li>Network: Select your custom VPC</li>
+<li>Subnet: Select your public Subnet (10.0.1.0 - us-east-1a)</li>
+</ul>
+</li>
+<li>[Add Storage] --&gt; [Add Tags]
+<ul>
+<li>Name: NAT-INSTANCE</li>
+</ul>
+</li>
+<li>[Configure Security Group]
+<ul>
+<li>Select an existing security group (radio button)</li>
+<li>Select <code>Web-DMZ</code></li>
+</ul>
+</li>
+<li>[Review and Launch]</li>
+<li>Needs HTTPS configured for Security Group</li>
+<li>Select [Instances] from sidebar</li>
+<li>Select your <code>NAT-INSTANCE</code> in the table</li>
+<li>[Actions] --&gt; [Networking] --&gt; [Change Source/Dest. Check]</li>
+<li>Disable <code>Source/Dest. Check</code> (Note: Do this only for NAT Instances)</li>
+<li>Select your VPC from the AWS management console</li>
+<li>Select [Route Tables] from sidebar</li>
+<li>Select your default Route Table for your VPC</li>
+<li>[Edit] and [Add another route]
+<ul>
+<li>Destintation: 0.0.0.0/0</li>
+<li>Target: Select your <code>NAT-INSTANCE</code></li>
+<li>Press [Save]</li>
+</ul>
+</li>
+</ul>
+<h4>Creating a NAT Gateway</h4>
+<ul>
+<li>Select VPC from AWS management console</li>
+<li>Select [NAT Gateway] from sidebar</li>
+<li>Press [Create NAT Gateway]
+<ul>
+<li>Subnet: Select your public subnet (10.0.1.0 - us-east-1a)</li>
+<li>Elastic IP Allocation ID: Press [Create New EIP]</li>
+<li>Press [Create a NAT Gateway]</li>
+<li>On the resulting screen there is a [Edit route tables] button, but it takes some time to launch the gateway so don't use it for this lab</li>
+<li>Press [Close]</li>
+</ul>
+</li>
+<li>Go back to [NAT Gateways] under VPC Dashboard</li>
+<li>Make sure gateway is available</li>
+<li>Select [Route Tables] from sidebar</li>
+<li>Select your default Route Table in the list</li>
+<li>Select [Routes] tab</li>
+<li>Press [Edit] --&gt; [Add another route]
+<ul>
+<li>Destination: 0.0.0.0/0</li>
+<li>Target: Select NAT Gateway (nat-[hash-giberish])</li>
+<li>Press [Save]</li>
+</ul>
+</li>
+</ul>
+<h4>Notes</h4>
+<ul>
+<li><code>NAT Gateway</code> is used for IPv4 only, <code>Egress Only Internet Gateway</code> is used for IPv6.</li>
+<li>Google "Comparison of NAT Instances and NAT Gateways" to find Amazon's summary page on the subject.</li>
+<li>NAT Gateways are preferred over NAT Instances whenever possible.</li>
+</ul>
+<h3>Our VPS So Far (Diagram)</h3>
+<p><a href="resources/05B8C5C691127DF289552459CED226AA.png">VPC with Public &amp; Private Subnets (PNG)</a></p>
+<h3>Exam Tips</h3>
+<h4>NAT Instances</h4>
+<ul>
+<li>When creating a NAT Instance, disable <code>Source/Destination Check</code> on the instance</li>
+<li>NAT Instances must be in public subnet</li>
+<li>There must be a route out of the private subnet to the NAT instance in order for this to work</li>
+<li>The amount of traffic that NAT instances can support depends on the instance size. If you are bottlenecking, increase the instance size. (Don't use t2.micro for production for example)</li>
+<li>You can create high availability using Autoscaling Groups, multiple subnets in different AZs, and a script to automate failover.</li>
+<li>Behind a Security Group</li>
+</ul>
+<h4>NAT Gateways</h4>
+<ul>
+<li>Preferred by the enterprise</li>
+<li>Scale automatically up to 10Gbps</li>
+<li>No need to patch</li>
+<li>Not associated with Security Groups</li>
+<li>Automatically assigned a public IP address</li>
+<li>Remember to update your Route Tables</li>
+<li>No need to disable Source/Destination Checks</li>
+</ul>
+<h2>Network Access Control Lists vs. Security Groups</h2>
+<p>*** more to come ***</p>
+</div></div>
+      <script>document.body.onkeyup = function(e) {
+if (e.keyCode === 37) window.location.href = 'Databases.html';
+}</script>
+    </body>
+    </html>
+  
