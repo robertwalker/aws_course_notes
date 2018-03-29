@@ -7,4 +7,4 @@ The notes are availiable in both Markdown and HTML. If you find any mistakes or 
 
 **Note:** Please submit all pull requests to the Markdown files. The HTML files are generated using the Markdown source.
 
-This is a work in progress. As I continue my journey through the course I wull post updates along the way.
+This is a work in progress. As I continue my journey through the course I will post updates along the way.
