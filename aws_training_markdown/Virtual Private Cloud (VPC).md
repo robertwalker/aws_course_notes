@@ -141,7 +141,7 @@ VPC Lab Notes
 
 ### Your VPC So Far (Diagram)
 
-[VPC with Public & Private Subnets (PNG)](resources/1B6FFBAA6138DD9CD3853B5499F95B3D.png)
+![1B6FFBAA6138DD9CD3853B5499F95B3D.png](resources/1B6FFBAA6138DD9CD3853B5499F95B3D.png)
 
 ### Lab Notes -- Part 2
 
@@ -169,7 +169,7 @@ NAT Instances & NAT Gateways
 
 #### Creating a NAT Instance
 
-* Select EC2 form AWS managmentment console
+* Select EC2 form AWS management console
 * Click [Launch Instance] button
 * Select [Community AMIs] in sidebar
 * Search for `NAT`
@@ -223,9 +223,9 @@ NAT Instances & NAT Gateways
 * Google "Comparison of NAT Instances and NAT Gateways" to find Amazon's summary page on the subject.
 * NAT Gateways are preferred over NAT Instances whenever possible.
 
-### Our VPS So Far (Diagram)
+### Your VPS So Far (Diagram)
 
-[VPC with Public & Private Subnets (PNG)](resources/05B8C5C691127DF289552459CED226AA.png)
+![05B8C5C691127DF289552459CED226AA.png](resources/05B8C5C691127DF289552459CED226AA.png)
 
 ### Exam Tips
 
@@ -251,4 +251,284 @@ NAT Instances & NAT Gateways
 Network Access Control Lists vs. Security Groups
 ------------------------------------------------
 
-*** more to come ***
+### Lab Notes
+
+* Select VPC from AWS management console
+* Select [Network ACLs] from the sidebar
+* Select the ACL assocated with your custom VPC
+* Press [Create Network ACL]
+  * Name tag: MyWebNACL
+  * VPC: Select your VPC (Can only be associated with 1 VPC
+  * Press [Yes, Cretae]
+* Back in [Network ACLs] select `MyWebNACL` in the list
+* Select [Inbound Rules] tab
+* Press [Edit]
+* Press [Add another rule]
+  * Fill out the Inbound rules according to table below
+  * Fill out the Outbound rules according to table below
+
+### Inbound Rules
+
+| Rule # | Type            | Protocol | Port Range | Source    | Allow/Deny |
+|--------|-----------------|----------|------------|-----------|------------|
+| 100    | HTTP (80)       | TCP (6)  | 80         | 0.0.0.0/0 | ALLOW      |
+| 200    | HTTPS (443)     | TCP (6)  | 443        | 0.0.0.0/0 | ALLOW      |
+| 300    | SSH (22)        | TCP (6)  | 22         | 0.0.0.0/0 | ALLOW      |
+| *      | ALL Traffic     | ALL      | ALL        | ::/0      | DENY       |
+| *      | ALL Traffic     | ALL      | ALL        | 0.0.0.0/0 | DENY       |
+
+### Outbound Rules
+
+| Rule # | Type            | Protocol | Port Range | Source    | Allow/Deny |
+|--------|-----------------|----------|------------|-----------|------------|
+| 100    | HTTP (80)       | TCP (6)  | 80         | 0.0.0.0/0 | ALLOW      |
+| 200    | HTTPS (443)     | TCP (6)  | 443        | 0.0.0.0/0 | ALLOW      |
+| 300    | Custom TPC Rule | TCP (6)  | 1024-65535 | 0.0.0.0/0 | ALLOW      |
+| *      | ALL Traffic     | ALL      | ALL        | ::/0      | DENY       |
+| *      | ALL Traffic     | ALL      | ALL        | 0.0.0.0/0 | DENY       |
+
+
+### Testing Out the Rules
+
+* Install and configure a web server and create a basic HTML page and make sure it works
+* Add a new rule matching Rule # 100 (HTTP) as Rule # 101
+* Try to access your web page...it should still work fine
+* Change Rule # 101 to Rule # 99
+* Access to your web page should be blocked
+* Remove the test Rule # 99
+
+### Exam Tips
+
+* Subnets can be associated with only 1 ACL
+* By default creating a private ACL all Inbound/Outbound traffic is set to `DENY`
+* For IPv4 start with Rule # 100 and incrment by 100
+* [Ephemeral Ports](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html#VPC_ACLs_Ephemeral_Ports). We used 1024-65535 for this lab
+* ACLs are evaluated before Security Groups
+
+### More Exam Tips
+
+* VCP have an ACL by default, configured to allow all inbound and outbound traffic.
+* Custom ACLs deny all inbound and outbound traffic. Add rules to allow traffic.
+* Each subnet must be associated with a Network ACL. Will default to the default ACL if not explicitly associated with an ACL.
+* Multiple subnets can be associaed with 1 Network ACL.
+* Subnets can be associated with only 1 Network ACL, Associating a subnet to an ACL removes any previous association.
+* Network ACL rules are evaluated in ascending numberical order.
+* Network ACLs have separate Inbound and Outbound rules either can allow or deny traffic
+* Network ACLs are stateless; responses to allowed inbound traffic are subject to the rules for outbound traffic (and vice versa). Remember Security Groups are Stateful.
+
+Custom VPCs and ELBs
+--------------------
+
+* Select EC2 from AWS management console
+* Select [Load Balancers] from the sidbar
+* Three types of Load Balancers
+  * Application Load Balancer
+  * Network Load Balancer
+  * Classic Load Balancer (Previous Generation)
+* Create a new Applicaiton Load Balancer
+  * Name: `MyALB`
+  * Scheme:
+    * internet-facing (selected)
+    * internal
+  * IP address tyupe:
+    * ipv4 (selected)
+    * dualstack
+  * Listeners
+    * Load Balanceer Protocol: HTTP
+    * Load Balancer Port: 80
+  * Avilability Zones:
+    * Select: us-east-1a (must be an internet facing subnet
+    * Press [Next: Configure Security Settings]
+      * ERROR: At least two subnets must be specified
+      * TIP: When setting up your VPC and plan to use a Load Balancer remember to configure subnets in at lease two different Availability Zones (AZ)
+
+VCP Flow Logs
+-------------
+
+* Capture information about the IP traffic flowing through network interfaces in your VPC
+* Flow log data is stored using Amazon CloudWatch logs
+* View flow log data in Amazon CloudWatch logs
+
+Flow logs can be created at 3 levels:
+
+* VPC
+* Subnet
+* Network Interface Level
+
+### Lab Notes
+
+* Select VPC from AWS management console
+* Select [Your VPCs] from sidebar
+* Select your VPC from the list
+* Select [Actions] --> [Create Flow Log]
+  * Resources: {displays your vpc]}
+  * Filter: 
+    * All (selected)
+    * Accept
+    * Reject
+  * Role: {Create a new Role}
+    * Click [Set Up Permissions] link
+      * IAM Role: Create a new IAM Role (selected)
+      * Role Name: flowlogsRole
+      * Press [Allow]
+    * Select flowlogsRole from the list
+  * ARN: {display only}
+  * Destination Log Group: 
+    * Create a new Log Group over in CloudWatch
+    * Select your new Log Group
+* Press [Create Flow Log]
+
+### Exam Tips
+
+* Cannot enable flow logs for VPCs that are peered with your VPC unless the peer VPC is in your account
+* You cannot tag a flow log
+* After creation of a flow log its cofiguration can't be changed. For example, you can't associate a different IAM role
+* Not all IP Traffic is monitored
+  * Traffic generated by instance when they contact the Amazon DNS, if you use your own DNS that traffic is logged.
+  * Traffic generated by a Widows instance for Amazon Windows license activation.
+  * Traffic to ad from 169.254.169.254 for instance metadata.
+  * DHCP traffic
+  * Traffic to the reseved IP for the default VPC router.
+
+NAT vs. Bastion
+--------------
+
+### Network Diagram
+
+![F62A209B19880CA2935F00EAAA92B6CF.png](resources/F62A209B19880CA2935F00EAAA92B6CF.png)
+
+### NAT
+
+Allows instances in private subnets access out to the Internet, but does not allow access to instances inside the private subnet from the Internet, such as SSH connections.
+
+### Bastion (A.K.A. Jumpbox)
+
+Used to allow access to instances inside private subnets from the public Internet for adminstrative purposes, such as SSH connections.
+
+### Exam Tips
+
+* NAT is used to provide Internet traffic to EC2 instances in private subnets.
+* Bastion is used to securely administer EC2 instances (using SSH or RDP) in private subnets. Also, sometimes called jump boxes.
+
+VPC Endpoints
+-------------
+
+Endpoints are used to provide internal gateway access to AWS servers outside our VPC without requiring public Internet access to those services (e.g. S3 buckets).
+
+### Lab Notes
+
+* Select IAM from AWS management console
+* Press [Create Role]
+  * Select EC2 from the list
+  * Select EC2: Allows EC2 instances to call AWS services on your behalf.
+  * Press [Next: Permissions]
+* Search for s3
+  * Select AmazonS3FullAccess from the list
+  * Press [Next: Review]
+    * Role name: `S3Admin`
+    * Press [Create role]
+* Select EC2 from AWS management console
+* Select [Instances] from the sidebar
+* Select your instance (`MyMySQL` for this lab exercise)
+* Select [Actions] -> [Instance Settings] -> [Attach/Replace IAM Role]
+  * IAM role: `S3Admin`
+  * Press [Apply]
+* Select VPC from AWS management console
+* Select [Network ACLs] from sidebar
+* Select your default Network ACL from the list (see table below)
+* Select [Subnet Associations] tab
+  * Associate your public subnet 10.0.1.0 - us-east-1a
+  * Press [Save]
+
+#### Network ACLs
+
+![Screen Shot 2018-04-04 at 10.43.39 AM.png](resources/9BBFB89CCB052E4CBB52C4751E484E37.png)
+
+![Screen Shot 2018-04-04 at 10.46.16 AM.png](resources/DB2D40FF041AEA6ACD0D87428CA0B608.png)
+
+#### Testing public access to S3
+
+* SSH into instance `ssh ec2-user@10.0.2.143 -i mypvk.pem`
+* `sudo su`
+* `aws s3 ls`
+* Shows list of buckets over Internet access
+* Select VPC from AWS management console
+* Select [Route Tables] from the sidbar
+* Select our default route table from the list
+* Remove route to NAT gateway (This will effectively shutddown Internet access)
+* `aws s3 ls` -- Should no longer show list
+
+### Create Endpoint Lab Notes
+
+* Select VPC from AWS management dashboard
+* Select [Endpoints] from the sidebar
+* Press [Create Endpoint]
+* Select com.amazonaws.us-east-1.s3 | Owner: amazon | Type: Gateway from the list
+* Select your VPC from the dropdown list
+* Select the `Main` route table from the list (subnet-d666a78b | 10.0.2.0 - us-east-1b
+* Policy: `Full Access`
+* Press [Create endpoint]
+* Back in Terminal: `aws s3 ls` -- Should again show the list of buckets
+
+### VPC Summary
+
+#### Final VPC Diagram
+
+![Screen Shot 2018-04-04 at 11.19.44 AM.png](resources/8AF6C207CC179F6BE72D5E8C6759D6C5.png)
+
+### Exam Tips
+
+#### NAT Instances
+
+* Disable `Source/Destination Check` on the instance.
+* Must be in a public subnet.
+* There must be a route out of the private subnet to the NAT instance.
+* The amount of traffic the NAT instance can support depends on the instance size. If bottlenecking, increase the instance size.
+* You can create high availability using Autoscaling Groups, multiple subnets in different AZs, and a script to automate failover.
+* Behind a Security Group.
+
+#### NAT Gateways
+
+* Preferred by the enterprise
+* Scale up automatically up to 10Gbps
+* No need to patch
+* Not associated with Security Groups
+* Automatically assigned a public IP address
+* Remember to update your route tables
+* No need to disable `Source/Destination Check`
+* More secure than a NAT instance
+
+#### Network ACLs
+
+* Your VPC automatially comes with a default network ACL, and by default it allows all outbound and inbound traffic.
+* You can create custom network ACLs. By default, each custom network ACL denies all inbound and outbound traffic until you add rules.
+* Each subnet in your VPC must be associated with a network ACL. If you don't explicitly associate a subnet, the subnet is associated with the default ACL.
+* You can associate an ACL with multiple subnets; however, a subnet can be associated with only one ACL at a time. When associating a subnet with an ACL the existing association is removed.
+* Network ACLs contain a numbered list of rules. Rules are evaluated in ascending numerical order.
+* Network ACLs have separate inbound and outbound rules, each rule can either allow or deny traffic.
+* Network ACLs are stateless; responses to allowed inbound traffic are subject to the rules for outbound traffic (and vice versa).
+* Block IP addresses using network ACLs not Security Groups.
+
+#### Application Load Balancers (ALBs)
+
+* You will need at least 2 public subnets in order to deploy an ALB.
+
+#### VPC Flow Logs
+
+* You cannot enable flow logs for VPCs that are peered with your VPC unless the peer VPC is in your account.
+* You cannot tag a flow log.
+* After you've created a flow log, you cannot change its configuration; for example you cannot associate a different AIM role with the flow log.
+* Not all IP Traffic is monitored:
+  * Traffic generated by instances when they contact the Amazon DNS server. If you use your own DNS it is logged.
+  * Traffic generated by a Windows instance for Amazon Windows license activation.
+  * Traffic to and from 169.254.169.254 for instance metadata.
+  * DHCP traffic.
+  * Traffic to the reserved IP address for the default VPC router.
+
+#### VPC Endpoints
+
+![Screen Shot 2018-04-04 at 12.11.00 PM.png](resources/8158091A12C532F954B45A82BAC4F65B.png)
+
+![Screen Shot 2018-04-04 at 12.11.52 PM.png](resources/5D601D3F7D91B535352BC7231D1FBFEF.png)
+
+* Endpoint types can be Gateway or Interface.
