@@ -1,0 +1,376 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- common.css -->
+      <style>* {-webkit-tap-highlight-color: rgba(0,0,0,0);}html {-webkit-text-size-adjust: none;}body {font-family: -apple-system, Helvetica, Arial, sans-serif;margin: 0;padding: 20px;color: #333;word-wrap: break-word;}h1, h2, h3, h4, h5, h6 {line-height: 1.1;}img {max-width: 100% !important;height: auto;}blockquote {margin: 0;padding: 0 15px;color: #777;border-left: 4px solid #ddd;}hr {background-color: #ddd;border: 0;height: 1px;margin: 15px 0;}code {font-family: Menlo, Consolas, 'Ubuntu Mono', Monaco, 'source-code-pro', monospace;line-height: 1.4;margin: 0;padding: 0.2em 0;font-size: 90%;background-color: rgba(0,0,0,0.04);border-radius: 3px;}pre > code {margin: 0;padding: 0;font-size: 100%;word-break: normal;background: transparent;border: 0;}ol {list-style-type: decimal;}ol ol, ul ol {list-style-type: lower-latin;}ol ol ol, ul ol ol, ul ul ol, ol ul ol {list-style-type: lower-roman;}table {border-spacing: 0;border-collapse: collapse;margin-top: 0;margin-bottom: 16px;}table th {font-weight: bold;}table th, table td {padding: 6px 13px;border: 1px solid #ddd;}table tr {border-top: 1px solid #ccc;}table tr:nth-child(even) {background-color: #f8f8f8;}input[type="checkbox"] {cursor: default;margin-right: 0.5em;font-size: 13px;}.task-list-item {list-style-type: none;}.task-list-item+.task-list-item {margin-top: 3px;}.task-list-item input {float: left;margin: 0.3em 1em 0.25em -1.6em;vertical-align: middle;}#tag-field {margin: 8px 2px 10px;}#tag-field .tag {display: inline-block;background: #cadff3;border-radius: 4px;padding: 1px 8px;color: black;font-size: 12px;margin-right: 10px;line-height: 1.4;}</style>
+      <!-- ace-static.css -->
+      <style>.ace_static_highlight {white-space: pre-wrap;}.ace_static_highlight .ace_gutter {width: 2em;text-align: right;padding: 0 3px 0 0;margin-right: 3px;}.ace_static_highlight.ace_show_gutter > .ace_line {padding-left: 2.6em;}.ace_static_highlight .ace_line {position: relative;}.ace_static_highlight .ace_gutter-cell {-moz-user-select: -moz-none;-khtml-user-select: none;-webkit-user-select: none;user-select: none;top: 0;bottom: 0;left: 0;position: absolute;}.ace_static_highlight .ace_gutter-cell:before {content: counter(ace_line, decimal);counter-increment: ace_line;}.ace_static_highlight {counter-reset: ace_line;}</style>
+      <style>.ace-chrome .ace_gutter {background: #ebebeb;color: #333;overflow : hidden;}.ace-chrome .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-chrome {background-color: #FFFFFF;color: black;}.ace-chrome .ace_cursor {color: black;}.ace-chrome .ace_invisible {color: rgb(191, 191, 191);}.ace-chrome .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-chrome .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-chrome .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-chrome .ace_invalid {background-color: rgb(153, 0, 0);color: white;}.ace-chrome .ace_fold {}.ace-chrome .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-chrome .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-chrome .ace_support.ace_type,.ace-chrome .ace_support.ace_class.ace-chrome .ace_support.ace_other {color: rgb(109, 121, 222);}.ace-chrome .ace_variable.ace_parameter {font-style:italic;color:#FD971F;}.ace-chrome .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-chrome .ace_comment {color: #236e24;}.ace-chrome .ace_comment.ace_doc {color: #236e24;}.ace-chrome .ace_comment.ace_doc.ace_tag {color: #236e24;}.ace-chrome .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-chrome .ace_variable {color: rgb(49, 132, 149);}.ace-chrome .ace_xml-pe {color: rgb(104, 104, 91);}.ace-chrome .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-chrome .ace_heading {color: rgb(12, 7, 255);}.ace-chrome .ace_list {color:rgb(185, 6, 144);}.ace-chrome .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-chrome .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-chrome .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-chrome .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-chrome .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-chrome .ace_gutter-active-line {background-color : #dcdcdc;}.ace-chrome .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-chrome .ace_storage,.ace-chrome .ace_keyword,.ace-chrome .ace_meta.ace_tag {color: rgb(147, 15, 128);}.ace-chrome .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-chrome .ace_string {color: #1A1AA6;}.ace-chrome .ace_entity.ace_other.ace_attribute-name {color: #994409;}.ace-chrome .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}</style>
+      <!-- export.css -->
+      <style>
+        body{margin:0 auto;max-width:800px;line-height:1.4}
+        #nav{margin:5px 0 10px;font-size:15px}
+        #titlearea{border-bottom:1px solid #ccc;font-size:17px;padding:10px 0;}
+        #contentarea{font-size:15px;margin:16px 0}
+        .cell{outline:0;min-height:20px;margin:5px 0;padding:5px 0;}
+        .code-cell{font-family:Menlo,Consolas,'Ubuntu Mono',Monaco,'source-code-pro',monospace;font-size:12px;}
+        .latex-cell{white-space:pre-wrap;}
+      </style>
+      <!-- User CSS -->
+      <style> .text-cell {font-size: 15px;}.code-cell {font-size: 12px;}.markdown-cell {font-size: 15px;}.latex-cell {font-size: 15px;}</style>
+    </head>
+    <body>
+      <div id="nav"><div>Previous: <a href='Virtual Private Cloud (VPC).html'>Virtual Private Cloud (VPC)</a>, Up: <a href='index.html'>Index</a></div></div>
+      <div id="titlearea">
+        <h2>Application Services</h2>
+      </div>
+      <div id="contentarea"><div class="cell markdown-cell"><h2>Simple Queue Service (SQS)</h2>
+<h3>Overview</h3>
+<ul>
+<li>A web service providing a message queue used to store message while waiting for a computer to process them.</li>
+<li>A distributed queue system that enables web service applications to queue messages taht one component generates to be consumed by another component.</li>
+<li>A queue is a temporary repository for messages that are awaiting processing.</li>
+</ul>
+<h3>Features</h3>
+<ul>
+<li>Decouple the components of an application to run independenly</li>
+<li>Store messages in a fail-safe queue</li>
+<li>Messages can contain up to 256 KB of text in any format</li>
+<li>Components can later retrieve the messages programmatically using the Amazon SQS API</li>
+<li>Queue acts as a buffer between the component producing and saving data and the component receiving the data for processing.</li>
+<li>Resolves issues that arise if the the producer is producing work faster than the consumer can process it, or if the producer or consumer are only intermittently connected to the network.</li>
+<li>Can use Auto-scaling Groups to scale consumer EC2 instances to handle the work produced.</li>
+</ul>
+<h3>Queue Types</h3>
+<ul>
+<li>Standard Queues (default)</li>
+<li>FIFO Queues</li>
+</ul>
+<h4>Standard Queues</h4>
+<ul>
+<li>This is the default queue type</li>
+<li>Provies neearly-unlimited number of transactions per second</li>
+<li>Guarantee that a messsage is delivered at least once</li>
+<li>Occasionally more than one copy of a message may be delivered out of order (due to hightly-distributed architecture)</li>
+<li>Provide best-effort ordering ensuring messages are generally delivered in the same order as they are sent</li>
+</ul>
+<h4>FIFO Queues</h4>
+<ul>
+<li>Complements standard queues</li>
+<li>Provides first-in-first-out delivery and exactly-once processing</li>
+<li>The order of messages sent and received are strictly preserved</li>
+<li>A message is delivered once and remains available until a consumer processes and deletes it</li>
+<li>No duplicates are introduced to the queue</li>
+<li>Supports message groups that allow multiple ordered message groups within a single queue</li>
+<li>Limited to 300 transactions per second (TPS), but have all the capabilities of standard queues</li>
+</ul>
+<h3>Key Facts</h3>
+<ul>
+<li>SQS is pull based, not push based</li>
+<li>Messages are 265 KB in size</li>
+<li>Messages can be kept in the queue from 1 minute to 14 days (Default is 4 days)</li>
+<li>Visabilty Time Out
+<ul>
+<li>The amount of time a message remains invisible in the queue after a reader picks it up</li>
+<li>The message is deleted from the queue after the the job is processed</li>
+<li>Jobs not processed by the Visibility Time Out will become visible again for another reader to pick up</li>
+<li>Could result in the same messages being delivered more than once</li>
+<li>Maximum time out is 12 hours</li>
+</ul>
+</li>
+<li>SQS guarantees your messages will be processed at least once</li>
+<li>SQS supports long polling as a way to retrieve messages from queues
+<ul>
+<li>Short polling returns immediately, even if the message queue is empty</li>
+<li>Long polling doesn't return a response until a message arrives in the queue, or the long poll times out</li>
+</ul>
+</li>
+</ul>
+<h2>Simple Workflow Service (SWF)</h2>
+<h3>Overview</h3>
+<ul>
+<li>Web service used to coordinate work across distributed application components</li>
+<li>Supports a wide range of use cases:
+<ul>
+<li>Media processing</li>
+<li>Web application back-ends</li>
+<li>Business process workflows</li>
+<li>Analytics pipelines</li>
+<li>Coordination of tasks, where tasks represent invocations of various processing steps performed by:
+<ul>
+<li>Executable code</li>
+<li>Web service calls</li>
+<li>Human actions</li>
+<li>Scripts</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>SWF vs SQS</h3>
+<ul>
+<li>SQS has a retention period of up to 14 days, SWF up to 1 year for workflow executions</li>
+<li>SWF presents a task-oriented API, whereas SQS offers a message-oriented API</li>
+<li>SWF ensures that a task is assigned only once and is never duplicated</li>
+<li>SWF keeps track of all the tasks and events in an application, SQS relies on applicaiton-level tracking, especially if your application uses multiple queues</li>
+</ul>
+<h3>SWF Actors</h3>
+<ul>
+<li>Wrokflow Starters
+<ul>
+<li>An application that can intitiate a workflow</li>
+<li>E-commerce website when placing an order</li>
+<li>Mobile app serching from bus times</li>
+</ul>
+</li>
+<li>Deciders
+<ul>
+<li>Control the flow of activity tasks in a workflow execution</li>
+<li>Decides what to do next when finising, or failing, a task</li>
+</ul>
+</li>
+<li>Activity Workers
+<ul>
+<li>Carry out the activity tasks</li>
+</ul>
+</li>
+</ul>
+<h2>Simple Notification Service (SNS)</h2>
+<h3>Overview</h3>
+<ul>
+<li>A highly scalable, flexible, and cost-effective cloud based notification service.</li>
+<li>Publish messages from an application and immediately deliver them to subsribers or other applications</li>
+<li>Push notifications to Apple, Google, Fire OS, and Windows devices, as well as Android devices in China with Baidu Cloud Push</li>
+<li>Send SMS text messages</li>
+<li>Send email</li>
+<li>Post messages to SQS queues</li>
+<li>Push to any HTTP endpoint</li>
+<li>Trigger Lambda functions
+<ul>
+<li>Messages pushed to an SNS topic that has a Lambda function subscribed to it, the Lambda function is invoked with the payload of the published message</li>
+<li>The Lambda function received the message payload as an input parameter and can manipulate the information in the message, publish the message to other SNS topics or send the message to other AWS services</li>
+</ul>
+</li>
+</ul>
+<h3>Features</h3>
+<ul>
+<li>Allows you to group multiple recipients using topics</li>
+<li>A topic is an "access point" for allowing recipients to dynamically subscribe for identical copies of the same notification</li>
+<li>One topic can support deliveries to multiple endpoint types
+<ul>
+<li>For example you can group together iOS, Androoid, and SMS recipients</li>
+</ul>
+</li>
+<li>When you publish once to a topic, SNS delivers appropriately formatted copies of your message to each subscriber</li>
+<li>All messages published to SNS are stored redundantly across multiple Availability Zoness (AZs)</li>
+</ul>
+<h3>Benefits</h3>
+<ul>
+<li>Instantaneous, push-based delivery (no polling)</li>
+<li>Simple API and easy integration with applications</li>
+<li>Flexible message delivery over multiple transport protocols</li>
+<li>Inexpensive, pay-as-you-go model with no up-front costs</li>
+<li>Web-based AWS Management Console offers the simplicity of a point-and-click interface</li>
+</ul>
+<h3>SNS vs. SQS</h3>
+<ul>
+<li>Both are messaging services in AWS</li>
+<li>SNS -- Push</li>
+<li>SQS -- Polls (Pulls)</li>
+</ul>
+<h3>Pricing</h3>
+<ul>
+<li>$0.50 per 1 million Amazon SNS Requests</li>
+<li>$0.06 per 100,000 notification deliveries over HTTP</li>
+<li>$0.75 per 100 notification deliveries over SMS</li>
+<li>$2.00 per 100,000 notifification deliveries over Email</li>
+</ul>
+<h2>Elastic Transcoder</h2>
+<ul>
+<li>A media transcoder in the cloud</li>
+<li>Converts media files from their original source format into different formats</li>
+<li>Provides transcoding presets for popular output formats, no guessing about settings for particular devices</li>
+<li>Pay based on the minutes that you transcode and the resolution at which you transcode</li>
+</ul>
+<p><a href="https://read.acloud.guru">A Cloud Guru Blog</a></p>
+<h2>API Gateway</h2>
+<h3>Overview</h3>
+<ul>
+<li>A fully managed service used to publish, maintain, monitor, and secure APIs at any scale</li>
+<li>Create an API that acts as a "front door" for applications to access data, business logic, or functionality from your back-end services such as;
+<ul>
+<li>Applciations running on Amazon Elastic Compute Cloud (EC2)</li>
+<li>Code running on AWS Lambda</li>
+<li>Any web application</li>
+</ul>
+</li>
+</ul>
+<h3>Features</h3>
+<ul>
+<li>API Caching of endpoint responses used to reduce the number of calls made to your endpoint and improve latency of requests
+<ul>
+<li>Responses are cached based on a specified time-to-live (TTL), measured in seconds</li>
+<li>Responds by looking up responses from the cache instead of making a request to the endpoint</li>
+</ul>
+</li>
+<li>Low cost and efficient</li>
+<li>Scales effortlessly</li>
+<li>Can throttle requests to prevent attacks</li>
+<li>Connect to CloudWatch to log all requests</li>
+</ul>
+<h3>Troublshooting</h3>
+<h4>Same Origin Policy</h4>
+<p>In computing, the same-origin policy allows scripts in one web page to access data in a second page, but only if the two pages have the same origin (i.e domain name).</p>
+<h4>Cross-Origin Resource Sharing (CORS)</h4>
+<ul>
+<li>CORS is one way the server at the other end (not the client code in the browser) can relax the same-orgin policy.</li>
+<li>CORS allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served.</li>
+<li>In case of this error; "Origin policy cannot be read at the remote resource." You need to enable CORS on the API Gateway</li>
+</ul>
+<h3>Exam Tips</h3>
+<ul>
+<li>Remember what API Gateway is at a high level</li>
+<li>Suports caching capabilities to increase performance</li>
+<li>Low cost and scales automatically</li>
+<li>Throttle requests to help prevent attacks</li>
+<li>Log results to CloudWatch</li>
+<li>Make sure to enable CORS when using Javascript/AJAX that access multiple domains</li>
+</ul>
+<h2>Kinesis</h2>
+<h3>Streaming Data</h3>
+<p>Data generated continuously by thousands of data sources, which typically send in the data records simultaneously, and in small sizes (order of kilobytes).</p>
+<h4>Examples</h4>
+<ul>
+<li>Purchases from online stores (think <a href="http://amazon.com">amazon.com</a>)</li>
+<li>Stock Prices</li>
+<li>Game data (as the gamer plays)</li>
+<li>Social network data</li>
+<li>Geospacial data (think <a href="http://uber.com">uber.com</a>)</li>
+<li>iOT sensor data</li>
+</ul>
+<h3>What is Kinesis</h3>
+<p>A platform on AWS used to load and analyze streaming data sent from your own custom applications that you build to support your business needs.</p>
+<h3>Core Services</h3>
+<ul>
+<li>Kinesis Streams</li>
+<li>Kinesis Firehose</li>
+<li>Kinesis Analytics</li>
+</ul>
+<h3>Kinesis Steams</h3>
+<ul>
+<li>Kinesis Steams consis of shards
+<ul>
+<li>5 transactions per second for reads, up to a maximum total data read rate of 2 MB per second and up to 1,000 records per second for writes, up to a a maximum total data wirte rate of 1 MB per second (including partition keys)</li>
+<li>The data capacity of your stream is a function of the number of shards that you specify for the stream. The total capacity of the stream is the sum of the capacities of its shards.</li>
+</ul>
+</li>
+</ul>
+</div><div class="cell text-cell"><img src="resources/326BA84EDCA4F7C4CBB84A058C963328.png" alt="Screen Shot 2018-04-06 at 10.07.51 AM.png" width="1753" height="837"><br></div><div class="cell markdown-cell"><h3>Kinesis Firehose</h3>
+<ul>
+<li>Kinesis Firehose is similar to Kinesis Streams except is completely automated, no need to configure and manage shards or even consumers.</li>
+<li>Data can be sent directly;
+<ul>
+<li>S3</li>
+<li>RedShift (through s3 and copied to RedShift)</li>
+<li>Elasticsearch Cluster</li>
+</ul>
+</li>
+</ul>
+</div><div class="cell text-cell"><img src="resources/00CA5EAF51202AEABF57D1A9C983345A.png" alt="Screen Shot 2018-04-06 at 10.10.33 AM.png" width="1755" height="836"></div><div class="cell markdown-cell"><h3>Kinesis Analytics</h3>
+<ul>
+<li>Allows you to run SQL queries of the data from Kinesis Firehose or Kinesis Streams, analyze, and store to S3, RedShift, or Elasticsearch Cluster.</li>
+</ul>
+</div><div class="cell text-cell"><img src="resources/EE1C3EB8845704D30C8CBD21B7DA2427.png" alt="Screen Shot 2018-04-06 at 10.24.57 AM.png" width="1754" height="832"></div><div class="cell markdown-cell"><h3>Exam Tips</h3>
+<ul>
+<li>Know the difference between Kinesis Streams and Kinesis Firehose. You may be given scenario questions and you must choose the most relevant service.</li>
+<li>Understand what Kinesis Analytics is.</li>
+</ul>
+<h3>Lab Notes</h3>
+<ul>
+<li>From AWS management console select <code>US East (N. Verginia)</code></li>
+<li>Select [CloudFormation] from the service list</li>
+<li>Press [Create New Stack]</li>
+<li>Select <code>Specify an Amazon S3 template URL</code> from <code>Choose a template</code></li>
+<li>Paste the link from the course resouces into the input field
+<ul>
+<li>Stack name: <code>MyKinesisStack</code></li>
+<li>Leave remaining settings as default</li>
+<li>Press [Next]</li>
+</ul>
+</li>
+<li>Leave everything on Options page as default</li>
+<li>Press [Next]</li>
+<li>Click the acknowledge checkbox at the end of the Review page</li>
+<li>Press [Create]</li>
+<li>Select [Outputs] tab</li>
+<li>Review the <code>URL</code> in the list and click it to view a simulated graph</li>
+<li>Review the EC2 instance that was created by the CloudFormation stack</li>
+<li>Select <code>Kinesis</code> from the AWS management console</li>
+<li>Press [Go to Streams]</li>
+<li>Review the steams created by CloudFormation stack</li>
+<li>Select <code>DynamoDB</code> from AWS management console to view data stored by Kinesis</li>
+<li>Cleanup by deleting the CloudFormation stack</li>
+</ul>
+<h2>Applicaiton Services Summary</h2>
+<h3>SQS Recap</h3>
+<ul>
+<li>SQS is a pull-based queue</li>
+<li>Messages are 265 KB in size</li>
+<li>Message can be kept in queue from 1 minute to 14 days (default 4 days)</li>
+<li>Visibiity Time Out (max 12 hours) -- See details in SQS section above</li>
+<li>Messages guaranteed to be processed at least once</li>
+<li>Support for short and long polling -- See details in SQS section above</li>
+<li>Queues can be standard or FIFO</li>
+</ul>
+<h3>SWF vs. SQS</h3>
+<ul>
+<li>SQS has retention period of 14 days, SWF up to 1 year for workflow executions</li>
+<li>SWF is task-oriented, SQS is message-oriented</li>
+<li>SWF ensures a task is assigned only once and never duplicated, SQS message may be processed more than once</li>
+<li>SWF keeps track of all tasks and events in an application, SQS may require application-level tracking, especially if your application uses multiple queues</li>
+<li>Actors -- See details in SWF section above
+<ul>
+<li>Wrokflow Starter</li>
+<li>Deciders</li>
+<li>Activity Workers -- May be compute or human workers</li>
+</ul>
+</li>
+</ul>
+<h3>SNS Subscribers</h3>
+<ul>
+<li>HTTP</li>
+<li>HTTPS</li>
+<li>Email</li>
+<li>Email-JSON</li>
+<li>SQS</li>
+<li>Application</li>
+<li>Lambda</li>
+</ul>
+<h3>SNS vs. SQS</h3>
+<ul>
+<li>Both are messaging sevices in AWS</li>
+<li>SNS -- Push</li>
+<li>SQS -- Polls (Pulls)</li>
+</ul>
+<h3>Elastic Transcoder</h3>
+<ul>
+<li>Media transcoder in the cloud</li>
+<li>Convert media files from one format to other formats for different devices</li>
+</ul>
+<h3>Kinesis Steams, Firehose &amp; Analytics</h3>
+<ul>
+<li>Shards think Streams</li>
+<li>No shards think Firehose</li>
+<li>Analytics think SQL queries on data</li>
+</ul>
+<p>See details in the Kinesis section above</p>
+</div></div>
+      <script>document.body.onkeyup = function(e) {
+if (e.keyCode === 37) window.location.href = 'Virtual Private Cloud (VPC).html';
+}</script>
+    </body>
+    </html>
+  
